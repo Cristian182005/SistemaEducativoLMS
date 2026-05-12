@@ -4,21 +4,34 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "cursos")
+
 public class Curso {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     @Column(name = "id_curso")
     private Integer idCurso;
 
     @Column(name = "id_docente")
     private Integer idDocente;
 
+    @Column(name = "nombre")
     private String nombre;
+
+    @Column(name = "descripcion")
     private String descripcion;
+
+    @Column(name = "grado")
     private String grado;
+
+    @Column(name = "seccion")
     private String seccion;
+
+    @Column(name = "estado")
     private String estado;
+
+    // GETTERS Y SETTERS
 
     public Integer getIdCurso() {
         return idCurso;
