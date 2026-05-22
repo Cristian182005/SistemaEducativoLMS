@@ -89,7 +89,7 @@ public class LoginController {
             return respuesta;
         }
 
-        usuario.setRol("PADRE");
+        usuario.setRol("PADRE/MADRE");
 
         usuario.setEstado("ACTIVO");
 
