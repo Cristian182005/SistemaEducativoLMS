@@ -1,25 +1,7 @@
-.dashboard-container {
-  display: flex;
-
-  min-height: 100vh;
-
-  background:
-  linear-gradient(
-      rgba(255,255,255,0.92),
-      rgba(255,255,255,0.92)
-  ),
-  url("../assets/IconColegio.ico");
-
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 350px;
-}
-
 .dashboard-title {
   font-size: 34px;
   font-weight: bold;
-
-  color: #8b0015;
+  color: #0d3b2e;
 }
 
 .dashboard-subtitle {
@@ -28,70 +10,96 @@
 
 .welcome-card {
   background: white;
-
   padding: 12px 25px;
-
   border-radius: 15px;
-
-  box-shadow:
-      0 10px 30px rgba(0,0,0,0.08);
-
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
   font-weight: 600;
 }
 
 .card-dashboard {
   border-radius: 20px;
-
   padding: 25px;
-
   color: white;
-
   transition: 0.3s;
-
   overflow: hidden;
-
   position: relative;
 }
 
 .card-dashboard:hover {
   transform: translateY(-5px);
-
-  box-shadow:
-      0 15px 30px rgba(0,0,0,0.15);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
 }
 
-.resumen-card {
+.dashboard-panel {
+  background: white;
   border-radius: 20px;
-
-  overflow: hidden;
-
-  border: none;
-
-  box-shadow:
-      0 10px 30px rgba(0,0,0,0.08);
+  padding: 25px;
+  min-height: 420px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
 }
 
-.resumen-card .card-body {
-  padding: 30px;
+.panel-title {
+  color: #0d3b2e;
+  font-weight: 700;
+  margin-bottom: 20px;
 }
 
-.table {
-  margin-bottom: 0;
+.calendar-box {
+  height: 320px;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
 }
 
-.table thead {
-  background: #8b0015;
-  color: white;
+.calendar-day {
+  font-size: 90px;
+  font-weight: bold;
+  color: #0d3b2e;
+  margin: 0;
 }
 
-.table th {
-  border: none;
+.calendar-box h5 {
+  margin-top: 10px;
+  color: #14532d;
+  text-transform: capitalize;
 }
 
-.table td {
-  vertical-align: middle;
+.calendar-box p {
+  color: #64748b;
+  text-transform: capitalize;
 }
 
 .badge {
   padding: 8px 12px;
+}
+
+.main-content {
+  flex: 1;
+  padding: 30px;
+  margin-left: 270px;
+  transition: all 0.3s ease;
+}
+
+.sidebar.collapsed ~ .main-content {
+  margin-left: 85px;
+}
+
+.dashboard-container {
+  display: flex;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex: 1;
+  padding: 30px;
+  margin-left: 270px;
+
+  overflow-y: auto;
+
+  height: 100vh;
 }

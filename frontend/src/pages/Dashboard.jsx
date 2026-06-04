@@ -3,14 +3,16 @@ import {
   FaChalkboardTeacher,
   FaBook,
   FaClipboardList,
+  FaUserFriends,
+  FaUserCog,
+  FaHome,
+  FaTachometerAlt,
 } from "react-icons/fa";
 
 import Sidebar from "../components/Sidebar";
-
 import { useEffect, useState } from "react";
-
 import { obtenerResumen } from "../services/dashboardService";
-
+import CalendarioDashboard from "../components/CalendarioDashboard";
 import "./Dashboard.css";
 
 function Dashboard() {
@@ -19,16 +21,23 @@ function Dashboard() {
     docentes: 0,
     cursos: 0,
     matriculas: 0,
+    padres: 0,
+    usuarios: 0,
   });
 
   useEffect(() => {
     cargarResumen();
+
+    const intervalo = setInterval(() => {
+      cargarResumen();
+    }, 5000);
+
+    return () => clearInterval(intervalo);
   }, []);
 
   const cargarResumen = async () => {
     try {
       const response = await obtenerResumen();
-
       setResumen(response.data);
     } catch (error) {
       console.log(error);
@@ -36,143 +45,160 @@ function Dashboard() {
   };
 
   return (
-    <div className="dashboard-container">
-      {/* SIDEBAR */}
-
+    <div
+      style={{
+        display: "flex",
+        background: "#f8fafc",
+        minHeight: "100vh",
+      }}
+    >
       <Sidebar />
 
-      {/* CONTENIDO */}
-
-      <div
-        style={{
-          flex: 1,
-          padding: "30px",
-          marginLeft: "270px",
-        }}
-      >
+      <div className="main-content">
         {/* HEADER */}
 
-        <div className="d-flex justify-content-between align-items-center mb-4">
-          <div>
-            <h1 className="dashboard-title">Dashboard Administrativo</h1>
+        <div
+          style={{
+            background: "#ffffff",
+            borderRadius: "18px",
+            padding: "25px",
+            marginBottom: "30px",
+            boxShadow: "0 3px 12px rgba(0,0,0,0.06)",
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "15px",
+            }}
+          >
+            <div
+              style={{
+                width: "65px",
+                height: "65px",
+                borderRadius: "15px",
+                background: "#0d3b2e",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                color: "white",
+                fontSize: "28px",
+              }}
+            >
+              <FaTachometerAlt />
+            </div>
 
-            <p className="dashboard-subtitle">
-              Bienvenido al Sistema Educativo LMS
-            </p>
+            <div>
+              <h2
+                style={{
+                  margin: 0,
+                  fontWeight: "700",
+                  color: "#0f172a",
+                }}
+              >
+                Admin
+              </h2>
+
+              <p
+                style={{
+                  margin: 0,
+                  color: "#64748b",
+                  fontSize: "15px",
+                }}
+              >
+                <FaHome /> Home &nbsp; &gt; &nbsp; Dashboard
+              </p>
+            </div>
           </div>
-
-          <div className="welcome-card">👋 Admin</div>
         </div>
 
-        {/* TARJETAS */}
+        {/* CARDS */}
 
         <div className="row">
-          <div className="col-md-3 mb-4">
+          <div className="col-md-4 mb-4">
             <CardDashboard
               titulo="Estudiantes"
               numero={resumen.estudiantes}
-              color="#2563eb"
+              color="#0d3b2e"
               icon={<FaUserGraduate />}
             />
           </div>
 
-          <div className="col-md-3 mb-4">
+          <div className="col-md-4 mb-4">
             <CardDashboard
               titulo="Docentes"
               numero={resumen.docentes}
-              color="#16a34a"
+              color="#14532d"
               icon={<FaChalkboardTeacher />}
             />
           </div>
 
-          <div className="col-md-3 mb-4">
+          <div className="col-md-4 mb-4">
             <CardDashboard
               titulo="Cursos"
               numero={resumen.cursos}
-              color="#f59e0b"
+              color="#7f1d1d"
               icon={<FaBook />}
             />
           </div>
 
-          <div className="col-md-3 mb-4">
+          <div className="col-md-4 mb-4">
             <CardDashboard
               titulo="Matrículas"
               numero={resumen.matriculas}
-              color="#dc2626"
+              color="#0d3b2e"
               icon={<FaClipboardList />}
+            />
+          </div>
+
+          <div className="col-md-4 mb-4">
+            <CardDashboard
+              titulo="Padres"
+              numero={resumen.padres}
+              color="#14532d"
+              icon={<FaUserFriends />}
+            />
+          </div>
+
+          <div className="col-md-4 mb-4">
+            <CardDashboard
+              titulo="Usuarios"
+              numero={resumen.usuarios}
+              color="#7f1d1d"
+              icon={<FaUserCog />}
             />
           </div>
         </div>
 
-        {/* TABLA */}
+        {/* GRAFICO + CALENDARIO */}
 
-        <div
-          className="card shadow border-0 mt-4"
-          style={{
-            borderRadius: "20px",
-          }}
-        >
-          <div className="card-body">
-            <h4
-              className="mb-4"
+        <div className="row mt-2">
+          <div className="col-lg-8 mb-4">
+            <div
               style={{
-                fontWeight: "bold",
+                background: "white",
+                borderRadius: "20px",
+                padding: "25px",
+                height: "100%",
+                boxShadow: "0 3px 12px rgba(0,0,0,0.08)",
               }}
             >
-              Resumen General del Sistema
-            </h4>
+              <h5
+                style={{
+                  color: "#0d3b2e",
+                  fontWeight: "700",
+                }}
+              >
+                Matrículas Registradas
+              </h5>
 
-            <table className="table table-hover">
-              <thead>
-                <tr>
-                  <th>Módulo</th>
-                  <th>Cantidad</th>
-                  <th>Estado</th>
-                </tr>
-              </thead>
+              <canvas id="graficoMatriculas"></canvas>
+            </div>
+          </div>
 
-              <tbody>
-                <tr>
-                  <td>Estudiantes</td>
-
-                  <td>{resumen.estudiantes}</td>
-
-                  <td>
-                    <span className="badge bg-success">Activo</span>
-                  </td>
-                </tr>
-
-                <tr>
-                  <td>Docentes</td>
-
-                  <td>{resumen.docentes}</td>
-
-                  <td>
-                    <span className="badge bg-success">Activo</span>
-                  </td>
-                </tr>
-
-                <tr>
-                  <td>Cursos</td>
-
-                  <td>{resumen.cursos}</td>
-
-                  <td>
-                    <span className="badge bg-success">Activo</span>
-                  </td>
-                </tr>
-
-                <tr>
-                  <td>Matrículas</td>
-
-                  <td>{resumen.matriculas}</td>
-
-                  <td>
-                    <span className="badge bg-primary">Registradas</span>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+          <div className="col-lg-4 mb-4">
+            <CalendarioDashboard />
           </div>
         </div>
       </div>
@@ -180,33 +206,37 @@ function Dashboard() {
   );
 }
 
-/* COMPONENTE CARD */
-
 function CardDashboard({ titulo, numero, color, icon }) {
   return (
     <div
-      className="card-dashboard"
       style={{
         background: color,
+        borderRadius: "20px",
+        padding: "25px",
+        color: "white",
+        boxShadow: "0 5px 20px rgba(0,0,0,0.10)",
+        transition: "0.3s",
+        cursor: "pointer",
       }}
     >
       <div className="d-flex justify-content-between align-items-center">
         <div>
-          <h2
+          <h1
             style={{
-              fontWeight: "bold",
+              fontWeight: "700",
+              marginBottom: "5px",
             }}
           >
             {numero}
-          </h2>
+          </h1>
 
           <h5>{titulo}</h5>
         </div>
 
         <div
           style={{
-            fontSize: "45px",
-            opacity: 0.3,
+            fontSize: "55px",
+            opacity: "0.25",
           }}
         >
           {icon}
