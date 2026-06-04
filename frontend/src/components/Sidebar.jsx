@@ -55,7 +55,7 @@ function Sidebar() {
 
         {!collapsed && (
           <div>
-            <h3 className="sidebar-title">Colegio INEI 46</h3>
+            <h3 className="sidebar-title">Colegio C.E.P La Sagrada Familia</h3>
 
             <p className="sidebar-subtitle">LMS Académico</p>
           </div>
