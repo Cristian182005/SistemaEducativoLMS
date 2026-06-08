@@ -1,12 +1,13 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
-import Login from "../pages/Login";
 import Dashboard from "../pages/Dashboard";
+import DashboardDocente from "../pages/DashboardDocente";
 import DashboardPadre from "../pages/DashboardPadre";
+import Login from "../pages/Login";
 
-import Estudiantes from "../pages/Estudiantes";
 import Cursos from "../pages/Cursos";
 import Docentes from "../pages/Docentes";
+import Estudiantes from "../pages/Estudiantes";
 import Matriculas from "../pages/Matriculas";
 import Padres from "../pages/Padres";
 
@@ -14,18 +15,18 @@ import GenerarMatricula from "../pages/GenerarMatricula";
 import RegisterPadre from "../pages/RegisterPadre";
 
 import Asignaciones from "../pages/Asignaciones";
-import Horarios from "../pages/Horarios";
 import Evaluaciones from "../pages/Evaluaciones";
+import Horarios from "../pages/Horarios";
 
 import Usuarios from "../pages/Usuarios";
 import VincularPadreHijo from "../pages/VincularPadreHijo";
 
-import Solicitudes from "../pages/SolicitudesMatricula";
 import Comunicados from "../pages/Comunicados";
 import Observaciones from "../pages/Observaciones";
+import Solicitudes from "../pages/SolicitudesMatricula";
 
-import ReportesPDF from "../pages/ReportePdf";
 import ReportesExcel from "../pages/ReporteExcel";
+import ReportesPDF from "../pages/ReportePdf";
 
 function AppRouter() {
   return (
@@ -35,6 +36,7 @@ function AppRouter() {
 
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/dashboard-padre" element={<DashboardPadre />} />
+        <Route path="/dashboard-docente" element={<DashboardDocente />} />
 
         <Route path="/register-padre" element={<RegisterPadre />} />
 
@@ -55,10 +57,7 @@ function AppRouter() {
 
         <Route path="/padres" element={<Padres />} />
         <Route path="/usuarios" element={<Usuarios />} />
-        <Route
-          path="/vincular-padre-hijo"
-          element={<VincularPadreHijo />}
-        />
+        <Route path="/vincular-padre-hijo" element={<VincularPadreHijo />} />
 
         {/* Procesos */}
 
@@ -71,10 +70,7 @@ function AppRouter() {
         <Route path="/reportes-pdf" element={<ReportesPDF />} />
         <Route path="/reportes-excel" element={<ReportesExcel />} />
 
-        <Route
-          path="/generar-matricula"
-          element={<GenerarMatricula />}
-        />
+        <Route path="/generar-matricula" element={<GenerarMatricula />} />
       </Routes>
     </BrowserRouter>
   );

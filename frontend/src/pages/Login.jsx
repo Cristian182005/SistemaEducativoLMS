@@ -59,8 +59,12 @@ function Login() {
           },
         });
 
-        if (response.data.usuario.rol === "PADRE") {
+        const rol = (response.data.usuario.rol || "").toUpperCase();
+
+        if (rol === "PADRE") {
           navigate("/dashboard-padre");
+        } else if (rol === "DOCENTE") {
+          navigate("/dashboard-docente");
         } else {
           navigate("/dashboard");
         }
