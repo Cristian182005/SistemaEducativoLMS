@@ -6,6 +6,9 @@ import backend.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import backend.model.Padre;
+import backend.repository.PadreRepository;
+
 import java.util.Optional;
 import java.util.HashMap;
 import java.util.Map;
@@ -17,6 +20,8 @@ public class LoginController {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+    @Autowired
+    private PadreRepository padreRepository;
 
     // =========================================
     // MENSAJE SI ENTRAN DESDE EL NAVEGADOR
@@ -69,39 +74,73 @@ public class LoginController {
 
     @PostMapping("/register-padre")
     public Map<String, Object> registerPadre(
-            @RequestBody Usuario usuario) {
+            @RequestBody Map<String, String> datos) {
 
         Map<String, Object> respuesta = new HashMap<>();
 
         Optional<Usuario> existe = usuarioRepository.findByCorreo(
-                usuario.getCorreo());
+                datos.get("correo"));
 
         if (existe.isPresent()) {
 
-            respuesta.put(
-                    "success",
-                    false);
-
-            respuesta.put(
-                    "message",
-                    "El correo ya existe");
+            respuesta.put("success", false);
+            respuesta.put("message", "El correo ya existe");
 
             return respuesta;
         }
+
+        // =====================================
+        // CREAR USUARIO
+        // =====================================
+
+        Usuario usuario = new Usuario();
+
+        usuario.setNombre(
+                datos.get("nombres") + " " +
+                        datos.get("apellidos"));
+
+        usuario.setCorreo(
+                datos.get("correo"));
+
+        usuario.setPassword(
+                datos.get("password"));
 
         usuario.setRol("PADRE");
 
         usuario.setEstado("ACTIVO");
 
-        Usuario nuevo = usuarioRepository.save(usuario);
+        Usuario nuevoUsuario = usuarioRepository.save(usuario);
 
-        respuesta.put(
-                "success",
-                true);
+        // =====================================
+        // CREAR PADRE
+        // =====================================
 
-        respuesta.put(
-                "usuario",
-                nuevo);
+        Padre padre = new Padre();
+
+        padre.setUsuario(nuevoUsuario);
+
+        padre.setNombres(
+                datos.get("nombres"));
+
+        padre.setApellidos(
+                datos.get("apellidos"));
+
+        padre.setDni(
+                datos.get("dni"));
+
+        padre.setTelefono(
+                datos.get("telefono"));
+
+        padre.setDireccion(
+                datos.get("direccion"));
+
+        padre.setTipo(
+                datos.get("tipo"));
+
+        padreRepository.save(padre);
+
+        respuesta.put("success", true);
+        respuesta.put("usuario", nuevoUsuario);
 
         return respuesta;
     }

@@ -22,7 +22,13 @@ function RegisterPadre() {
   const [error, setError] = useState("");
 
   const [form, setForm] = useState({
-    nombre: "",
+    nombres: "",
+    apellidos: "",
+    dni: "",
+    telefono: "",
+    direccion: "",
+    tipo: "Padre",
+
     correo: "",
     password: "",
     confirmarPassword: "",
@@ -49,7 +55,13 @@ function RegisterPadre() {
       const response = await axios.post(
         "http://localhost:8081/api/register-padre",
         {
-          nombre: form.nombre,
+          nombres: form.nombres,
+          apellidos: form.apellidos,
+          dni: form.dni,
+          telefono: form.telefono,
+          direccion: form.direccion,
+          tipo: form.tipo,
+
           correo: form.correo,
           password: form.password,
         },
@@ -124,7 +136,7 @@ function RegisterPadre() {
 
           <h1 className="bienvenido">Crear Cuenta</h1>
 
-          <p className="subtitulo">Registro de Padre o madre de Familia</p>
+          <p className="subtitulo">Registro de Padre o Madre de Familia</p>
 
           <form onSubmit={registrar}>
             {/* NOMBRE */}
@@ -153,6 +165,68 @@ function RegisterPadre() {
               />
             </div>
 
+            <div className="input-group-custom">
+              <input
+                type="text"
+                name="nombres"
+                placeholder="Nombres"
+                value={form.nombres}
+                onChange={handleChange}
+                required
+              />
+            </div>
+
+            <div className="input-group-custom">
+              <input
+                type="text"
+                name="apellidos"
+                placeholder="Apellidos"
+                value={form.apellidos}
+                onChange={handleChange}
+                required
+              />
+            </div>
+
+            <div className="input-group-custom">
+              <input
+                type="text"
+                name="dni"
+                placeholder="DNI"
+                value={form.dni}
+                onChange={handleChange}
+                required
+              />
+            </div>
+
+            <div className="input-group-custom">
+              <input
+                type="text"
+                name="telefono"
+                placeholder="Teléfono"
+                value={form.telefono}
+                onChange={handleChange}
+                required
+              />
+            </div>
+
+            <div className="input-group-custom">
+              <input
+                type="text"
+                name="direccion"
+                placeholder="Dirección"
+                value={form.direccion}
+                onChange={handleChange}
+                required
+              />
+            </div>
+
+            <div className="input-group-custom">
+              <select name="tipo" value={form.tipo} onChange={handleChange}>
+                <option value="PADRE">Padre</option>
+                <option value="MADRE">Madre</option>
+                <option value="APODERADO">Apoderado</option>
+              </select>
+            </div>
             {/* PASSWORD */}
 
             <div className="input-group-custom password-container">
