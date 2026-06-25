@@ -18,6 +18,8 @@ function VincularPadreHijo() {
 
   const [idPadre, setIdPadre] = useState("");
   const [idEstudiante, setIdEstudiante] = useState("");
+  const [mensaje, setMensaje] = useState("");
+  const [error, setError] = useState("");
 
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -44,9 +46,19 @@ function VincularPadreHijo() {
     }
   };
 
+  const limpiarVinculo = () => {
+    setIdPadre("");
+    setIdEstudiante("");
+    setMensaje("");
+    setError("");
+  };
+
   const vincular = async () => {
+    setError("");
+    setMensaje("");
+
     if (!idPadre || !idEstudiante) {
-      alert("Seleccione padre y estudiante");
+      setError("Debe seleccionar padre y estudiante para vincular.");
       return;
     }
 
@@ -60,14 +72,13 @@ function VincularPadreHijo() {
         },
       });
 
-      alert("Vínculo registrado");
+      setMensaje("Vínculo registrado correctamente.");
+      setError("");
 
-      setIdPadre("");
-      setIdEstudiante("");
-
+      limpiarVinculo();
       cargarDatos();
     } catch (error) {
-      alert(error.response?.data || "Error al vincular");
+      setError(error.response?.data || "Error al vincular");
     }
   };
 
@@ -263,6 +274,7 @@ function VincularPadreHijo() {
 
             <div className="col-md-2 d-flex align-items-end">
               <button
+                type="button"
                 className="btn btn-success w-100 text-white fw-bold"
                 style={{ borderRadius: "12px", padding: "12px 0" }}
                 onClick={vincular}
@@ -271,6 +283,22 @@ function VincularPadreHijo() {
               </button>
             </div>
           </div>
+
+          {(mensaje || error) && (
+            <div className="mt-3">
+              {mensaje && (
+                <div className="alert alert-success py-2 px-3 rounded-3 mb-2" role="alert">
+                  {mensaje}
+                </div>
+              )}
+
+              {error && (
+                <div className="alert alert-danger py-2 px-3 rounded-3 mb-2" role="alert">
+                  {error}
+                </div>
+              )}
+            </div>
+          )}
         </div>
 
         {/* TABLA DE VÍNCULOS */}
@@ -366,6 +394,7 @@ function VincularPadreHijo() {
                       </td>
                       <td className="text-center">
                         <button
+                          type="button"
                           className="btn btn-sm btn-danger"
                           style={{ borderRadius: "10px", minWidth: "95px" }}
                           onClick={() => eliminar(v.idPadreEstudiante)}

@@ -51,7 +51,8 @@ function Padres() {
   const [searchTerm, setSearchTerm] = useState("");
 
   const padresFiltrados = padres.filter((padre) => {
-    const valor = `${padre.nombres} ${padre.apellidos} ${padre.dni}`.toLowerCase();
+    const estudiante = estudiantePorPadre[padre.idPadre];
+    const valor = `${padre.nombres} ${padre.apellidos} ${padre.dni} ${estudiante?.nombres || ""} ${estudiante?.apellidoPaterno || ""}`.toLowerCase();
     return valor.includes(searchTerm.toLowerCase());
   });
 
@@ -246,6 +247,11 @@ function Padres() {
     setIdPadre(null);
   };
 
+  const cerrarFormulario = () => {
+    limpiarFormulario();
+    setMostrarFormulario(false);
+  };
+
   const nombreEstudiante = (padre) => {
     const estudiante = estudiantePorPadre[padre.idPadre];
     if (estudiante?.nombres) {
@@ -330,6 +336,7 @@ function Padres() {
 
               {!padreSeleccionado ? (
                 <button
+                  type="button"
                   className="btn btn-light btn-md fw-bold shadow-sm text-success d-flex align-items-center gap-2"
                   style={{ borderRadius: "12px" }}
                   onClick={() => {
@@ -344,6 +351,7 @@ function Padres() {
                 </button>
               ) : (
                 <button
+                  type="button"
                   className="btn btn-white btn-md fw-bold d-flex align-items-center gap-2"
                   style={{ borderRadius: "12px", color: "#115133", backgroundColor: "#f4f6f9" }}
                   onClick={() => setPadreSeleccionado(null)}
@@ -436,7 +444,7 @@ function Padres() {
                 backgroundColor: "rgba(0,0,0,0.45)",
                 zIndex: 1040,
               }}
-              onClick={() => setMostrarFormulario(false)}
+              onClick={cerrarFormulario}
             />
 
             <div
@@ -495,11 +503,11 @@ function Padres() {
                         </div>
                       </div>
 
-                      <button
+                              <button
                         type="button"
                         className="btn-close btn-close-white"
                         aria-label="Cerrar"
-                        onClick={() => setMostrarFormulario(false)}
+                        onClick={cerrarFormulario}
                         style={{ filter: "drop-shadow(0 0 1px rgba(0,0,0,0.35))" }}
                       />
                     </div>
@@ -603,11 +611,11 @@ function Padres() {
                       </div>
 
                       <div className="d-flex gap-2 mt-4 justify-content-end">
-                        <button
+                              <button
                           type="button"
                           className="btn btn-outline-secondary fw-bold"
                           style={{ minWidth: "110px" }}
-                          onClick={() => setMostrarFormulario(false)}
+                          onClick={cerrarFormulario}
                         >
                           Cancelar
                         </button>
@@ -688,7 +696,7 @@ function Padres() {
                 overflowY: "auto",
               }}
             >
-              <table className="table align-middle mb-0" style={{ minWidth: "900px" }}>
+              <table className="table table-hover align-middle mb-0" style={{ minWidth: "900px" }}>
                 <thead
                   style={{
                     backgroundColor: "#f8f9fa",
@@ -766,6 +774,7 @@ function Padres() {
                         <td className="text-center">
                           <div className="d-flex justify-content-center gap-2 flex-wrap">
                             <button
+                              type="button"
                               className="btn btn-sm btn-success d-flex align-items-center justify-content-center gap-2"
                               style={{
                                 borderRadius: "10px",
@@ -779,6 +788,7 @@ function Padres() {
                             </button>
 
                             <button
+                              type="button"
                               className="btn btn-sm d-flex align-items-center justify-content-center"
                               style={{
                                 backgroundColor: "#fff3e0",
@@ -793,6 +803,7 @@ function Padres() {
                             </button>
 
                             <button
+                              type="button"
                               className="btn btn-sm d-flex align-items-center justify-content-center"
                               style={{
                                 backgroundColor: "#ffebee",

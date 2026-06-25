@@ -139,21 +139,6 @@ function RegisterPadre() {
           <p className="subtitulo">Registro de Padre o Madre de Familia</p>
 
           <form onSubmit={registrar}>
-            {/* NOMBRE */}
-
-            <div className="input-group-custom">
-              <input
-                type="text"
-                name="nombre"
-                placeholder="Nombre completo"
-                value={form.nombre}
-                onChange={handleChange}
-                required
-              />
-            </div>
-
-            {/* CORREO */}
-
             <div className="input-group-custom">
               <input
                 type="email"
@@ -221,10 +206,10 @@ function RegisterPadre() {
             </div>
 
             <div className="input-group-custom">
-              <select name="tipo" value={form.tipo} onChange={handleChange}>
-                <option value="PADRE">Padre</option>
-                <option value="MADRE">Madre</option>
-                <option value="APODERADO">Apoderado</option>
+              <select name="tipo" value={form.tipo} onChange={handleChange} required>
+                <option value="Padre">Padre</option>
+                <option value="Madre">Madre</option>
+                <option value="Apoderado">Apoderado</option>
               </select>
             </div>
             {/* PASSWORD */}
