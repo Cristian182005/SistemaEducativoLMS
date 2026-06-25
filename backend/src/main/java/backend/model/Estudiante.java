@@ -23,6 +23,7 @@ public class Estudiante {
     private String departamento;
     private String distrito;
 
+    private String dni;
     private String sexo;
     private Integer edad;
     private String direccion;
@@ -128,6 +129,14 @@ public class Estudiante {
 
     public void setDireccion(String direccion) {
         this.direccion = direccion;
+    }
+
+    public String getDni() {
+        return dni;
+    }
+
+    public void setDni(String dni) {
+        this.dni = dni;
     }
 
     public Matricula getMatricula() {

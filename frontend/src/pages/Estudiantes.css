@@ -1,0 +1,751 @@
+.estudiantes-container {
+  display: flex;
+  min-height: 100vh;
+  background: #f8fafc;
+}
+
+.estudiantes-main {
+  flex: 1;
+  padding: 30px;
+  margin-left: 270px;
+  transition: all 0.3s ease;
+}
+
+.sidebar.collapsed ~ .estudiantes-main {
+  margin-left: 85px;
+}
+
+/* HEADER */
+.estudiantes-header {
+  background: linear-gradient(135deg, #115133 0%, #1a6b45 100%);
+  border-radius: 16px;
+  padding: 25px 30px;
+  margin-bottom: 25px;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+  box-shadow: 0 4px 15px rgba(17, 81, 51, 0.3);
+}
+
+.estudiantes-header-info h2 {
+  margin: 0;
+  font-weight: 700;
+  font-size: 26px;
+  letter-spacing: -0.5px;
+}
+
+.estudiantes-header-info p {
+  margin: 5px 0 0;
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 14px;
+}
+
+.estudiantes-header-btn {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+/* BOTONES HEADER */
+.btn-header-primary {
+  background: #145c3a;
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  padding: 10px 22px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-header-primary:hover {
+  background: #0d4a2e;
+  transform: translateY(-1px);
+}
+
+.btn-header-cancel {
+  background: #7a1b1b;
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  padding: 10px 22px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-header-cancel:hover {
+  background: #5a1212;
+}
+
+.btn-header-back {
+  background: white;
+  color: #115133;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 22px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-header-back:hover {
+  background: #f1f5f9;
+}
+
+/* CARD TABLE */
+.estudiantes-card {
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
+}
+
+.estudiantes-card-header {
+  padding: 20px 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.estudiantes-card-header h5 {
+  margin: 0;
+  font-weight: 700;
+  color: #0f172a;
+  font-size: 18px;
+}
+
+.estudiantes-badge {
+  background: #eef7f2;
+  color: #115133;
+  border: 1px solid #d1ebd9;
+  border-radius: 8px;
+  padding: 6px 14px;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+/* SEARCH BAR */
+.estudiantes-search {
+  padding: 15px 25px;
+  border-bottom: 1px solid #f1f5f9;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.estudiantes-search input {
+  flex: 1;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 10px 16px;
+  font-size: 14px;
+  background: #f8fafc;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.estudiantes-search input:focus {
+  border-color: #115133;
+  background: white;
+  box-shadow: 0 0 0 3px rgba(17, 81, 51, 0.1);
+}
+
+.estudiantes-search input::placeholder {
+  color: #94a3b8;
+}
+
+.btn-search {
+  background: #115133;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 20px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.btn-search:hover {
+  background: #0d4a2e;
+}
+
+.btn-clear-search {
+  background: #e9ecef;
+  color: #495057;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 16px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-clear-search:hover {
+  background: #dee2e6;
+}
+
+/* TABLE */
+.estudiantes-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.estudiantes-table thead {
+  background: #f8fafc;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.estudiantes-table th {
+  padding: 14px 20px;
+  text-align: left;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #64748b;
+  border-bottom: 2px solid #edf2f7;
+}
+
+.estudiantes-table td {
+  padding: 14px 20px;
+  font-size: 14px;
+  color: #334155;
+  border-bottom: 1px solid #f1f5f9;
+  vertical-align: middle;
+}
+
+.estudiantes-table tbody tr {
+  transition: background 0.2s ease;
+}
+
+.estudiantes-table tbody tr:hover {
+  background: #f8fafc;
+}
+
+/* AVATAR */
+.estudiante-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.estudiante-avatar.femenino {
+  background: #fceef3;
+}
+
+.estudiante-avatar.masculino {
+  background: #e1f7e7;
+}
+
+.estudiante-avatar.sin-sexo {
+  background: #e2e8f0;
+}
+
+/* BADGES */
+.badge-matricula {
+  background: #eef7f2;
+  color: #115133;
+  border-radius: 8px;
+  padding: 5px 12px;
+  font-weight: 600;
+  font-size: 12px;
+}
+
+.badge-codigo {
+  background: #f1f5f9;
+  color: #475569;
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-weight: 600;
+  font-size: 12px;
+  font-family: monospace;
+}
+
+/* ACTION BUTTONS */
+.acciones-btn {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+}
+
+.btn-action-profile {
+  background: #115133;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 14px;
+  font-weight: 600;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.btn-action-profile:hover {
+  background: #0d4a2e;
+}
+
+.btn-action-edit {
+  background: #fff3e0;
+  color: #e65100;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-action-edit:hover {
+  background: #ffe0b2;
+}
+
+.btn-action-delete {
+  background: #ffebee;
+  color: #7a1b1b;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-action-delete:hover {
+  background: #ffcdd2;
+}
+
+/* FORMULARIO CARD */
+.estudiantes-form-card {
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
+  position: relative;
+}
+
+.estudiantes-form-accent {
+  height: 6px;
+  background: #115133;
+}
+
+.estudiantes-form-accent.editing {
+  background: #7a1b1b;
+}
+
+.estudiantes-form-body {
+  padding: 30px;
+}
+
+.estudiantes-form-title {
+  font-weight: 700;
+  color: #115133;
+  font-size: 20px;
+  margin-bottom: 25px;
+}
+
+.estudiantes-form-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #64748b;
+  margin-bottom: 6px;
+  display: block;
+}
+
+.estudiantes-form-input {
+  width: 100%;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 14px;
+  background: #f4f6f9;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.estudiantes-form-input:focus {
+  background: white;
+  box-shadow: 0 0 0 3px rgba(17, 81, 51, 0.1);
+}
+
+.estudiantes-form-input:read-only {
+  background: #e9ecef;
+  color: #6c757d;
+  cursor: not-allowed;
+}
+
+.estudiantes-form-select {
+  width: 100%;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 14px;
+  background: #f4f6f9;
+  outline: none;
+  transition: all 0.3s ease;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 14px;
+}
+
+.estudiantes-form-select:focus {
+  background-color: white;
+  box-shadow: 0 0 0 3px rgba(17, 81, 51, 0.1);
+}
+
+.estudiantes-form-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  margin-top: 25px;
+}
+
+.btn-form-clear {
+  background: #e9ecef;
+  color: #495057;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 24px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-form-clear:hover {
+  background: #dee2e6;
+}
+
+.btn-form-submit {
+  background: #115133;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 24px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-form-submit:hover {
+  background: #0d4a2e;
+}
+
+.btn-form-submit.editing {
+  background: #7a1b1b;
+}
+
+.btn-form-submit.editing:hover {
+  background: #5a1212;
+}
+
+/* PERFIL CARD */
+.estudiantes-profile-card {
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
+}
+
+.estudiantes-profile-header {
+  padding: 30px;
+  text-align: center;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.estudiantes-profile-avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  margin: 0 auto 15px;
+  position: relative;
+}
+
+.estudiantes-profile-avatar.femenino {
+  background: #fceef3;
+}
+
+.estudiantes-profile-avatar.masculino {
+  background: #e1f7e7;
+}
+
+.estudiantes-profile-avatar.sin-sexo {
+  background: #e2e8f0;
+}
+
+.estudiantes-profile-status {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  width: 16px;
+  height: 16px;
+  background: #28a745;
+  border: 3px solid white;
+  border-radius: 50%;
+}
+
+.estudiantes-profile-name {
+  font-weight: 700;
+  color: #0f172a;
+  font-size: 22px;
+  margin-bottom: 5px;
+}
+
+.estudiantes-profile-code {
+  color: #115133;
+  font-weight: 600;
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+.estudiantes-profile-enrollment {
+  color: #64748b;
+  font-size: 13px;
+  margin-bottom: 20px;
+}
+
+.estudiantes-profile-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.btn-profile-edit {
+  background: #115133;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 20px;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-profile-edit:hover {
+  background: #0d4a2e;
+}
+
+.btn-profile-delete {
+  background: white;
+  color: #dc3545;
+  border: 1px solid #dc3545;
+  border-radius: 8px;
+  padding: 8px 20px;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-profile-delete:hover {
+  background: #ffebee;
+}
+
+.btn-profile-back {
+  background: #f1f5f9;
+  color: #475569;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 20px;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-profile-back:hover {
+  background: #e2e8f0;
+}
+
+/* PROFILE BODY */
+.estudiantes-profile-body {
+  padding: 30px;
+}
+
+.estudiantes-profile-section {
+  margin-bottom: 25px;
+}
+
+.estudiantes-profile-section-title {
+  font-weight: 700;
+  color: #115133;
+  font-size: 16px;
+  margin-bottom: 15px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #f1f5f9;
+}
+
+.estudiantes-profile-row {
+  display: flex;
+  padding: 10px 0;
+  font-size: 14px;
+  border-bottom: 1px solid #f8fafc;
+}
+
+.estudiantes-profile-label {
+  width: 200px;
+  font-weight: 600;
+  color: #64748b;
+  flex-shrink: 0;
+}
+
+.estudiantes-profile-value {
+  color: #0f172a;
+  font-weight: 500;
+  flex: 1;
+}
+
+/* PAGINATION */
+.estudiantes-pagination {
+  padding: 15px 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid #f1f5f9;
+}
+
+.estudiantes-pagination-info {
+  font-size: 13px;
+  color: #64748b;
+}
+
+.estudiantes-pagination-btns {
+  display: flex;
+  gap: 6px;
+}
+
+.btn-page {
+  background: white;
+  color: #475569;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-page:hover:not(:disabled) {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+}
+
+.btn-page.active {
+  background: #115133;
+  color: white;
+  border-color: #115133;
+}
+
+.btn-page:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* EMPTY STATE */
+.estudiantes-empty {
+  text-align: center;
+  padding: 60px 20px;
+  color: #94a3b8;
+}
+
+.estudiantes-empty-icon {
+  font-size: 48px;
+  margin-bottom: 15px;
+  opacity: 0.5;
+}
+
+.estudiantes-empty h5 {
+  font-weight: 600;
+  color: #64748b;
+  margin-bottom: 5px;
+}
+
+.estudiantes-empty p {
+  font-size: 14px;
+}
+
+/* LOADING */
+.estudiantes-loading {
+  text-align: center;
+  padding: 40px;
+  color: #64748b;
+}
+
+.estudiantes-loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #e2e8f0;
+  border-top-color: #115133;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin: 0 auto 15px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .estudiantes-main {
+    margin-left: 0;
+    padding: 15px;
+  }
+
+  .estudiantes-header {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .estudiantes-search {
+    flex-direction: column;
+  }
+
+  .estudiantes-table th,
+  .estudiantes-table td {
+    padding: 10px 12px;
+    font-size: 12px;
+  }
+
+  .estudiantes-profile-row {
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .estudiantes-profile-label {
+    width: auto;
+  }
+}
