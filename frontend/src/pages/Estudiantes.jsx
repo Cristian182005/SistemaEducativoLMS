@@ -580,7 +580,7 @@ function Estudiantes() {
                       </button>
 
                       <button
-                        className="btn btn-danger btn-sm"
+                        className="btn btn-danger btn-sm me-2"
                         onClick={() =>
                           eliminar(
                             estudiante.idEstudiante
@@ -589,6 +589,15 @@ function Estudiantes() {
                       >
                         Eliminar
                       </button>
+
+                      <a
+                        href={`http://localhost:8081/api/pdf/constancia-matricula/${estudiante.idEstudiante}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="btn btn-info btn-sm"
+                      >
+                        Constancia
+                      </a>
 
                     </td>
 

@@ -16,6 +16,7 @@ import {
   FaUserCog,
   FaBars,
   FaUserCircle,
+  FaChartLine,
 } from "react-icons/fa";
 
 import "./Sidebar.css";
@@ -288,6 +289,14 @@ function Sidebar() {
           collapsed={collapsed}
           active={location.pathname === "/generar-matricula"}
           onClick={(e) => handleNavigate(e, "/generar-matricula")}
+        />
+
+        <MenuItem
+          icon={<FaChartLine />}
+          text="Reportes Metabase"
+          collapsed={collapsed}
+          active={location.pathname === "/reportes-metabase"}
+          onClick={(e) => handleNavigate(e, "/reportes-metabase")}
         />
       </div>
 

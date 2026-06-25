@@ -27,6 +27,7 @@ import Solicitudes from "../pages/SolicitudesMatricula";
 
 import ReportesExcel from "../pages/ReporteExcel";
 import ReportesPDF from "../pages/ReportePdf";
+import ReportesMetabase from "../pages/ReportesMetabase";
 
 function AppRouter() {
   return (
@@ -69,6 +70,7 @@ function AppRouter() {
 
         <Route path="/reportes-pdf" element={<ReportesPDF />} />
         <Route path="/reportes-excel" element={<ReportesExcel />} />
+        <Route path="/reportes-metabase" element={<ReportesMetabase />} />
 
         <Route path="/generar-matricula" element={<GenerarMatricula />} />
       </Routes>
