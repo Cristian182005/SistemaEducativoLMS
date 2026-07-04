@@ -139,132 +139,122 @@ function RegisterPadre() {
           <p className="subtitulo">Registro de Padre o Madre de Familia</p>
 
           <form onSubmit={registrar}>
-            {/* NOMBRE */}
+            <div className="register-grid">
+              <div className="input-group-custom">
+                <input
+                  type="text"
+                  name="nombres"
+                  placeholder="Nombres"
+                  value={form.nombres}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
 
-            <div className="input-group-custom">
-              <input
-                type="text"
-                name="nombre"
-                placeholder="Nombre completo"
-                value={form.nombre}
-                onChange={handleChange}
-                required
-              />
-            </div>
+              <div className="input-group-custom">
+                <input
+                  type="text"
+                  name="apellidos"
+                  placeholder="Apellidos"
+                  value={form.apellidos}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
 
-            {/* CORREO */}
+              <div className="input-group-custom full-width">
+                <input
+                  type="email"
+                  name="correo"
+                  placeholder="Correo electrónico"
+                  value={form.correo}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
 
-            <div className="input-group-custom">
-              <input
-                type="email"
-                name="correo"
-                placeholder="Correo electrónico"
-                value={form.correo}
-                onChange={handleChange}
-                required
-              />
-            </div>
+              <div className="input-group-custom">
+                <input
+                  type="text"
+                  name="dni"
+                  placeholder="DNI"
+                  value={form.dni}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
 
-            <div className="input-group-custom">
-              <input
-                type="text"
-                name="nombres"
-                placeholder="Nombres"
-                value={form.nombres}
-                onChange={handleChange}
-                required
-              />
-            </div>
+              <div className="input-group-custom">
+                <input
+                  type="text"
+                  name="telefono"
+                  placeholder="Teléfono"
+                  value={form.telefono}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
 
-            <div className="input-group-custom">
-              <input
-                type="text"
-                name="apellidos"
-                placeholder="Apellidos"
-                value={form.apellidos}
-                onChange={handleChange}
-                required
-              />
-            </div>
+              <div className="input-group-custom">
+                <input
+                  type="text"
+                  name="direccion"
+                  placeholder="Dirección"
+                  value={form.direccion}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
 
-            <div className="input-group-custom">
-              <input
-                type="text"
-                name="dni"
-                placeholder="DNI"
-                value={form.dni}
-                onChange={handleChange}
-                required
-              />
-            </div>
+              <div className="input-group-custom">
+                <select
+                  name="tipo"
+                  value={form.tipo}
+                  onChange={handleChange}
+                  className="tipo-select"
+                  required
+                >
+                  <option value="PADRE">Padre</option>
+                  <option value="MADRE">Madre</option>
+                  <option value="APODERADO">Apoderado</option>
+                </select>
+              </div>
 
-            <div className="input-group-custom">
-              <input
-                type="text"
-                name="telefono"
-                placeholder="Teléfono"
-                value={form.telefono}
-                onChange={handleChange}
-                required
-              />
-            </div>
+              <div className="input-group-custom password-container">
+                <input
+                  type={mostrarPassword ? "text" : "password"}
+                  name="password"
+                  placeholder="Contraseña"
+                  value={form.password}
+                  onChange={handleChange}
+                  required
+                />
 
-            <div className="input-group-custom">
-              <input
-                type="text"
-                name="direccion"
-                placeholder="Dirección"
-                value={form.direccion}
-                onChange={handleChange}
-                required
-              />
-            </div>
+                <span
+                  className="eye-icon"
+                  onClick={() => setMostrarPassword(!mostrarPassword)}
+                >
+                  {mostrarPassword ? <FaEyeSlash /> : <FaEye />}
+                </span>
+              </div>
 
-            <div className="input-group-custom">
-              <select name="tipo" value={form.tipo} onChange={handleChange}>
-                <option value="PADRE">Padre</option>
-                <option value="MADRE">Madre</option>
-                <option value="APODERADO">Apoderado</option>
-              </select>
-            </div>
-            {/* PASSWORD */}
+              <div className="input-group-custom password-container">
+                <input
+                  type={mostrarConfirmar ? "text" : "password"}
+                  name="confirmarPassword"
+                  placeholder="Confirmar contraseña"
+                  value={form.confirmarPassword}
+                  onChange={handleChange}
+                  required
+                />
 
-            <div className="input-group-custom password-container">
-              <input
-                type={mostrarPassword ? "text" : "password"}
-                name="password"
-                placeholder="Contraseña"
-                value={form.password}
-                onChange={handleChange}
-                required
-              />
-
-              <span
-                className="eye-icon"
-                onClick={() => setMostrarPassword(!mostrarPassword)}
-              >
-                {mostrarPassword ? <FaEyeSlash /> : <FaEye />}
-              </span>
-            </div>
-
-            {/* CONFIRMAR PASSWORD */}
-
-            <div className="input-group-custom password-container">
-              <input
-                type={mostrarConfirmar ? "text" : "password"}
-                name="confirmarPassword"
-                placeholder="Confirmar contraseña"
-                value={form.confirmarPassword}
-                onChange={handleChange}
-                required
-              />
-
-              <span
-                className="eye-icon"
-                onClick={() => setMostrarConfirmar(!mostrarConfirmar)}
-              >
-                {mostrarConfirmar ? <FaEyeSlash /> : <FaEye />}
-              </span>
+                <span
+                  className="eye-icon"
+                  onClick={() => setMostrarConfirmar(!mostrarConfirmar)}
+                >
+                  {mostrarConfirmar ? <FaEyeSlash /> : <FaEye />}
+                </span>
+              </div>
             </div>
 
             {/* ERROR */}

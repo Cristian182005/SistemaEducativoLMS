@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
-import { FaPlus, FaSearch, FaCheckCircle, FaTimesCircle, FaUserShield, FaUserTie, FaUsers, FaPen, FaTrashAlt, FaArrowLeft } from "react-icons/fa";
+import { FaPlus, FaSearch, FaCheckCircle, FaTimesCircle, FaUserShield, FaUserTie, FaUsers, FaPen, FaTrashAlt, FaArrowLeft, FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import Sidebar from "../components/Sidebar";
-
 import {
   listarUsuarios,
   guardarUsuario,
   actualizarUsuario,
   eliminarUsuario,
 } from "../services/usuarioService";
+
+const ITEMS_POR_PAGINA = 5;
 
 function Usuarios() {
   const [usuarios, setUsuarios] = useState([]);
@@ -28,11 +29,22 @@ function Usuarios() {
   const [idUsuario, setIdUsuario] = useState(null);
 
   const [searchTerm, setSearchTerm] = useState("");
+  const [paginaActual, setPaginaActual] = useState(1);
 
   const usuariosFiltrados = usuarios.filter((usuario) => {
     const valor = `${usuario.nombre} ${usuario.correo}`.toLowerCase();
     return valor.includes(searchTerm.toLowerCase());
   });
+
+  const totalPaginas = Math.ceil(usuariosFiltrados.length / ITEMS_POR_PAGINA);
+
+  const usuariosPaginados = usuariosFiltrados.slice(
+    (paginaActual - 1) * ITEMS_POR_PAGINA,
+    paginaActual * ITEMS_POR_PAGINA
+  );
+
+  const inicioDe = usuariosFiltrados.length === 0 ? 0 : (paginaActual - 1) * ITEMS_POR_PAGINA + 1;
+  const finDe = Math.min(paginaActual * ITEMS_POR_PAGINA, usuariosFiltrados.length);
 
   const totalUsuarios = usuarios.length;
   const usuariosActivos = usuarios.filter((u) => u.estado === "ACTIVO").length;
@@ -77,6 +89,29 @@ function Usuarios() {
       activo = false;
     };
   }, []);
+
+  // Reset pagina al buscar
+  useEffect(() => {
+    setPaginaActual(1);
+  }, [searchTerm]);
+
+  // ============================
+  // PAGINACION
+  // ============================
+
+  const irAPagina = (n) => {
+    if (n < 1 || n > totalPaginas) return;
+    setPaginaActual(n);
+  };
+
+  const generarPaginas = () => {
+    let inicio = Math.max(1, paginaActual - 2);
+    let fin = Math.min(totalPaginas, inicio + 4);
+    if (fin - inicio < 4) inicio = Math.max(1, fin - 4);
+    const paginas = [];
+    for (let i = inicio; i <= fin; i++) paginas.push(i);
+    return paginas;
+  };
 
   // ============================
   // INPUTS
@@ -219,6 +254,7 @@ function Usuarios() {
         fontFamily: "'Poppins', sans-serif",
       }}
     >
+
       <Sidebar />
 
       <div
@@ -227,6 +263,9 @@ function Usuarios() {
           marginLeft: "270px",
           padding: "40px",
           minWidth: "0",
+          width: "calc(100vw - 270px)",
+          overflowX: "auto",
+          boxSizing: "border-box",
         }}
       >
         {/* BREADCRUMB */}
@@ -250,7 +289,7 @@ function Usuarios() {
           <div className="d-flex flex-column flex-lg-row justify-content-between align-items-start align-items-lg-center gap-3">
             <div className="flex-grow-1">
               <h2 className="fw-extrabold m-0" style={{ letterSpacing: "-0.5px", fontSize: "26px" }}>
-                Módulo de Usuarios
+                Gestión de Usuarios
               </h2>
               <p className="text-white-50 small m-0 mt-2 fw-medium">
                 Administra accesos, roles y estados del sistema.
@@ -619,8 +658,7 @@ function Usuarios() {
             <div
               className="table-responsive"
               style={{
-                maxHeight: "520px",
-                overflowY: "auto",
+                overflowX: "auto",
               }}
             >
               <table className="table align-middle mb-0" style={{ minWidth: "780px" }}>
@@ -642,7 +680,7 @@ function Usuarios() {
                 </thead>
 
                 <tbody>
-                  {usuariosFiltrados.length === 0 ? (
+                  {usuariosPaginados.length === 0 ? (
                     <tr>
                       <td
                         colSpan="5"
@@ -652,7 +690,7 @@ function Usuarios() {
                       </td>
                     </tr>
                   ) : (
-                    usuariosFiltrados.map((usuario) => (
+                    usuariosPaginados.map((usuario) => (
                       <tr key={usuario.idUsuario} style={{ borderBottom: "1px solid #f1f5f9" }}>
                         <td className="ps-4 py-3">
                           <div className="d-flex align-items-center">
@@ -779,6 +817,40 @@ function Usuarios() {
                 </tbody>
               </table>
             </div>
+
+            {/* PAGINACION */}
+            {totalPaginas > 1 && (
+              <div className="d-flex justify-content-between align-items-center px-4 py-3" style={{ borderTop: "1px solid #f1f5f9" }}>
+                <span className="text-muted small fw-medium">
+                  Página {paginaActual} de {totalPaginas}
+                </span>
+                <div className="d-flex align-items-center gap-2">
+                  <button
+                    onClick={() => irAPagina(paginaActual - 1)}
+                    disabled={paginaActual === 1}
+                    style={{ width: "36px", height: "36px", borderRadius: "10px", border: "1px solid #e5e7eb", backgroundColor: paginaActual === 1 ? "#f9fafb" : "#fff", color: paginaActual === 1 ? "#d1d5db" : "#115133", cursor: paginaActual === 1 ? "not-allowed" : "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}
+                  >
+                    <FaChevronLeft size={12} />
+                  </button>
+                  {generarPaginas().map((n) => (
+                    <button
+                      key={n}
+                      onClick={() => irAPagina(n)}
+                      style={{ width: "36px", height: "36px", borderRadius: "10px", border: n === paginaActual ? "none" : "1px solid #e5e7eb", backgroundColor: n === paginaActual ? "#115133" : "#fff", color: n === paginaActual ? "#fff" : "#374151", fontWeight: n === paginaActual ? "700" : "500", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "14px" }}
+                    >
+                      {n}
+                    </button>
+                  ))}
+                  <button
+                    onClick={() => irAPagina(paginaActual + 1)}
+                    disabled={paginaActual === totalPaginas}
+                    style={{ width: "36px", height: "36px", borderRadius: "10px", border: "1px solid #e5e7eb", backgroundColor: paginaActual === totalPaginas ? "#f9fafb" : "#fff", color: paginaActual === totalPaginas ? "#d1d5db" : "#115133", cursor: paginaActual === totalPaginas ? "not-allowed" : "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}
+                  >
+                    <FaChevronRight size={12} />
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         )}
         {/* PERFIL DEL USUARIO */}

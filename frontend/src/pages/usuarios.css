@@ -1,0 +1,34 @@
+/* =====================================
+   SCROLL TABLA USUARIOS - SOLUCIÓN 2
+===================================== */
+
+.usuarios-table-container {
+  max-height: 650px;
+  overflow-y: auto;
+  overflow-x: auto;
+  position: relative;
+}
+
+/* SCROLL BAR PERSONALIZADO */
+.usuarios-table-container::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+.usuarios-table-container::-webkit-scrollbar-thumb {
+  background: #115133;
+  border-radius: 10px;
+}
+
+.usuarios-table-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* 🔥 FIX IMPORTANTE: SOLO EL THEAD STICKY AQUÍ */
+.usuarios-table-container thead th {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  background: #f8f9fa;
+  box-shadow: 0 2px 2px rgba(0,0,0,0.05);
+}
