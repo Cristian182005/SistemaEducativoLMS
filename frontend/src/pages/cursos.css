@@ -1,0 +1,777 @@
+/* ============================================================
+   cursos.css — Estilos exclusivos del módulo de Cursos
+   Diseño basado en estudiantes.css
+   ============================================================ */
+
+/* ── Layout raíz ── */
+.cursos-container {
+  display: flex;
+  min-height: 100vh;
+  background: #f8fafc;
+}
+
+.cursos-main {
+  flex: 1;
+  padding: 30px;
+  margin-left: 270px;
+  transition: all 0.3s ease;
+}
+
+/* ── HEADER ── */
+.cursos-header {
+  background: linear-gradient(135deg, #115133 0%, #1a6b45 100%);
+  border-radius: 16px;
+  padding: 25px 30px;
+  margin-bottom: 25px;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+  box-shadow: 0 4px 15px rgba(17, 81, 51, 0.3);
+}
+
+.cursos-header-info h2 {
+  margin: 0;
+  font-weight: 700;
+  font-size: 26px;
+  letter-spacing: -0.5px;
+}
+
+.cursos-header-info p {
+  margin: 5px 0 0;
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 14px;
+}
+
+.cursos-header-btn {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+/* ── Botones del header ── */
+.btn-cursos-primary {
+  background: #145c3a;
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  padding: 10px 22px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-cursos-primary:hover {
+  background: #0d4a2e;
+  transform: translateY(-1px);
+}
+
+.btn-cursos-cancel {
+  background: #7a1b1b;
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  padding: 10px 22px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-cursos-cancel:hover {
+  background: #5a1212;
+}
+
+.btn-cursos-back {
+  background: white;
+  color: #115133;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 22px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-cursos-back:hover {
+  background: #f1f5f9;
+}
+
+/* ── Tarjetas de estadísticas ── */
+.cursos-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 25px;
+}
+
+.cursos-stat-card {
+  background: white;
+  border-radius: 16px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.cursos-stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+}
+
+.cursos-stat-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  flex-shrink: 0;
+}
+
+.cursos-stat-icon.green  { background: rgba(17, 81, 51, 0.1);  color: #115133; }
+.cursos-stat-icon.blue   { background: rgba(13, 110, 253, 0.1); color: #0d6efd; }
+.cursos-stat-icon.red    { background: rgba(220, 53, 69, 0.1);  color: #dc3545; }
+.cursos-stat-icon.yellow { background: rgba(255, 193, 7, 0.1);  color: #c08a00; }
+
+.cursos-stat-info p {
+  margin: 0;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #94a3b8;
+}
+
+.cursos-stat-info h3 {
+  margin: 4px 0 0;
+  font-size: 26px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+/* ── Card principal (tabla) ── */
+.cursos-card {
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
+}
+
+.cursos-card-header {
+  padding: 20px 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.cursos-card-header h5 {
+  margin: 0;
+  font-weight: 700;
+  color: #0f172a;
+  font-size: 18px;
+}
+
+.cursos-badge {
+  background: #eef7f2;
+  color: #115133;
+  border: 1px solid #d1ebd9;
+  border-radius: 8px;
+  padding: 6px 14px;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+/* ── Barra de búsqueda ── */
+.cursos-search {
+  padding: 15px 25px;
+  border-bottom: 1px solid #f1f5f9;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.cursos-search input {
+  flex: 1;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 10px 16px;
+  font-size: 14px;
+  background: #f8fafc;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.cursos-search input:focus {
+  border-color: #115133;
+  background: white;
+  box-shadow: 0 0 0 3px rgba(17, 81, 51, 0.1);
+}
+
+.cursos-search input::placeholder {
+  color: #94a3b8;
+}
+
+.btn-cursos-search {
+  background: #115133;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 20px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.btn-cursos-search:hover {
+  background: #0d4a2e;
+}
+
+.btn-cursos-clear {
+  background: #e9ecef;
+  color: #495057;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 16px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-cursos-clear:hover {
+  background: #dee2e6;
+}
+
+/* ── Tabla ── */
+.cursos-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.cursos-table thead {
+  background: #f8fafc;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.cursos-table th {
+  padding: 14px 20px;
+  text-align: left;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #64748b;
+  border-bottom: 2px solid #edf2f7;
+}
+
+.cursos-table td {
+  padding: 14px 20px;
+  font-size: 14px;
+  color: #334155;
+  border-bottom: 1px solid #f1f5f9;
+  vertical-align: middle;
+}
+
+.cursos-table tbody tr {
+  transition: background 0.2s ease;
+}
+
+.cursos-table tbody tr:hover {
+  background: #f8fafc;
+}
+
+/* ── Avatar / ícono del curso ── */
+.curso-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+  background: #eef7f2;
+}
+
+/* ── Badges ── */
+.badge-curso-id {
+  background: #f1f5f9;
+  color: #475569;
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-weight: 600;
+  font-size: 12px;
+  font-family: monospace;
+}
+
+.badge-docente {
+  background: #e8f4fd;
+  color: #0c5460;
+  border-radius: 8px;
+  padding: 5px 12px;
+  font-weight: 600;
+  font-size: 12px;
+}
+
+/* ── Botones de acción en tabla ── */
+.cursos-acciones-btn {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+}
+
+.btn-curso-profile {
+  background: #115133;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 14px;
+  font-weight: 600;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.btn-curso-profile:hover {
+  background: #0d4a2e;
+}
+
+.btn-curso-edit {
+  background: #fff3e0;
+  color: #e65100;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-curso-edit:hover {
+  background: #ffe0b2;
+}
+
+.btn-curso-delete {
+  background: #ffebee;
+  color: #7a1b1b;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-curso-delete:hover {
+  background: #ffcdd2;
+}
+
+/* ── Formulario card ── */
+.cursos-form-card {
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
+  position: relative;
+}
+
+.cursos-form-accent {
+  height: 6px;
+  background: #115133;
+}
+
+.cursos-form-accent.editing {
+  background: #7a1b1b;
+}
+
+.cursos-form-body {
+  padding: 30px;
+}
+
+.cursos-form-title {
+  font-weight: 700;
+  color: #115133;
+  font-size: 20px;
+  margin-bottom: 25px;
+}
+
+.cursos-form-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #64748b;
+  margin-bottom: 6px;
+  display: block;
+}
+
+.cursos-form-input {
+  width: 100%;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 14px;
+  background: #f4f6f9;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.cursos-form-input:focus {
+  background: white;
+  box-shadow: 0 0 0 3px rgba(17, 81, 51, 0.1);
+}
+
+.cursos-form-select {
+  width: 100%;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 14px;
+  background: #f4f6f9;
+  outline: none;
+  transition: all 0.3s ease;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 14px;
+}
+
+.cursos-form-select:focus {
+  background-color: white;
+  box-shadow: 0 0 0 3px rgba(17, 81, 51, 0.1);
+}
+
+.cursos-form-textarea {
+  width: 100%;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 14px;
+  background: #f4f6f9;
+  outline: none;
+  transition: all 0.3s ease;
+  resize: vertical;
+  min-height: 80px;
+  font-family: inherit;
+}
+
+.cursos-form-textarea:focus {
+  background: white;
+  box-shadow: 0 0 0 3px rgba(17, 81, 51, 0.1);
+}
+
+.cursos-form-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  margin-top: 25px;
+}
+
+.btn-cursos-form-clear {
+  background: #e9ecef;
+  color: #495057;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 24px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-cursos-form-clear:hover {
+  background: #dee2e6;
+}
+
+.btn-cursos-form-submit {
+  background: #115133;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 24px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-cursos-form-submit:hover {
+  background: #0d4a2e;
+}
+
+.btn-cursos-form-submit.editing {
+  background: #7a1b1b;
+}
+
+.btn-cursos-form-submit.editing:hover {
+  background: #5a1212;
+}
+
+/* ── Perfil del curso (vista detalle) ── */
+.cursos-profile-card {
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
+}
+
+.cursos-profile-header {
+  padding: 30px;
+  text-align: center;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.cursos-profile-icon {
+  width: 110px;
+  height: 110px;
+  border-radius: 20px;
+  background: #eef7f2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 52px;
+  margin: 0 auto 15px;
+  box-shadow: 0 8px 24px rgba(17, 81, 51, 0.12);
+}
+
+.cursos-profile-name {
+  font-weight: 700;
+  color: #0f172a;
+  font-size: 22px;
+  margin-bottom: 5px;
+}
+
+.cursos-profile-id {
+  color: #115133;
+  font-weight: 600;
+  font-size: 14px;
+  margin-bottom: 5px;
+  font-family: monospace;
+}
+
+.cursos-profile-docente {
+  color: #64748b;
+  font-size: 13px;
+  margin-bottom: 20px;
+}
+
+.cursos-profile-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.btn-cursos-profile-edit {
+  background: #115133;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 20px;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-cursos-profile-edit:hover {
+  background: #0d4a2e;
+}
+
+.btn-cursos-profile-delete {
+  background: white;
+  color: #dc3545;
+  border: 1px solid #dc3545;
+  border-radius: 8px;
+  padding: 8px 20px;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-cursos-profile-delete:hover {
+  background: #ffebee;
+}
+
+/* ── Cuerpo del perfil ── */
+.cursos-profile-body {
+  padding: 30px;
+}
+
+.cursos-profile-section {
+  margin-bottom: 25px;
+}
+
+.cursos-profile-section-title {
+  font-weight: 700;
+  color: #115133;
+  font-size: 16px;
+  margin-bottom: 15px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #f1f5f9;
+}
+
+.cursos-profile-row {
+  display: flex;
+  padding: 10px 0;
+  font-size: 14px;
+  border-bottom: 1px solid #f8fafc;
+}
+
+.cursos-profile-label {
+  width: 200px;
+  font-weight: 600;
+  color: #64748b;
+  flex-shrink: 0;
+}
+
+.cursos-profile-value {
+  color: #0f172a;
+  font-weight: 500;
+  flex: 1;
+}
+
+/* ── Paginación ── */
+.cursos-pagination {
+  padding: 15px 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid #f1f5f9;
+}
+
+.cursos-pagination-info {
+  font-size: 13px;
+  color: #64748b;
+}
+
+.cursos-pagination-btns {
+  display: flex;
+  gap: 6px;
+}
+
+.btn-cursos-page {
+  background: white;
+  color: #475569;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-cursos-page:hover:not(:disabled) {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+}
+
+.btn-cursos-page.active {
+  background: #115133;
+  color: white;
+  border-color: #115133;
+}
+
+.btn-cursos-page:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ── Estado vacío ── */
+.cursos-empty {
+  text-align: center;
+  padding: 60px 20px;
+  color: #94a3b8;
+}
+
+.cursos-empty-icon {
+  font-size: 48px;
+  margin-bottom: 15px;
+  opacity: 0.5;
+}
+
+.cursos-empty h5 {
+  font-weight: 600;
+  color: #64748b;
+  margin-bottom: 5px;
+}
+
+.cursos-empty p {
+  font-size: 14px;
+}
+
+/* ── Spinner de carga ── */
+.cursos-loading {
+  text-align: center;
+  padding: 40px;
+  color: #64748b;
+}
+
+.cursos-loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #e2e8f0;
+  border-top-color: #115133;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin: 0 auto 15px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .cursos-main {
+    margin-left: 0;
+    padding: 15px;
+  }
+
+  .cursos-header {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .cursos-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .cursos-search {
+    flex-direction: column;
+  }
+
+  .cursos-table th,
+  .cursos-table td {
+    padding: 10px 12px;
+    font-size: 12px;
+  }
+
+  .cursos-profile-row {
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .cursos-profile-label {
+    width: auto;
+  }
+}

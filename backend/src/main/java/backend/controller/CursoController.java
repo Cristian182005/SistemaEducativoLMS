@@ -52,6 +52,8 @@ public class CursoController {
 
             curso.setDescripcion(datos.getDescripcion());
 
+            curso.setDocente(datos.getDocente());
+
             return cursoRepository.save(curso);
         }
 

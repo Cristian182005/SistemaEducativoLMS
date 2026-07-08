@@ -13,6 +13,10 @@ public class Curso {
     @Column(name = "id_curso")
     private Integer idCurso;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_docente")
+    private Docente docente;
+
     private String nombre;
 
     private String descripcion;
@@ -27,6 +31,13 @@ public class Curso {
         this.idCurso = idCurso;
     }
 
+    public Docente getDocente() {
+        return docente;
+    }
+
+    public void setDocente(Docente docente) {
+        this.docente = docente;
+    }
     public String getNombre() {
         return nombre;
     }
