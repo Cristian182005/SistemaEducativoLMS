@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { FaSearch, FaUserFriends, FaChild, FaLink } from "react-icons/fa";
+import { FaSearch, FaUserFriends, FaChild, FaLink, FaTrashAlt, FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import Sidebar from "../components/Sidebar";
 import "./vincularPadreHijo.css";
 
@@ -12,6 +12,8 @@ import {
   eliminarVinculo,
 } from "../services/padreEstudianteService";
 
+const ITEMS_POR_PAGINA = 5;
+
 function VincularPadreHijo() {
   const [padres, setPadres] = useState([]);
   const [estudiantes, setEstudiantes] = useState([]);
@@ -23,12 +25,39 @@ function VincularPadreHijo() {
   const [error, setError] = useState("");
 
   const [searchTerm, setSearchTerm] = useState("");
+  const [paginaActual, setPaginaActual] = useState(1);
 
   const vinculosFiltrados = vinculos.filter((v) => {
     const valor =
       `${v.padre?.nombres} ${v.padre?.apellidos} ${v.estudiante?.nombres} ${v.estudiante?.apellidoPaterno}`.toLowerCase();
     return valor.includes(searchTerm.toLowerCase());
   });
+
+  const totalPaginas = Math.ceil(vinculosFiltrados.length / ITEMS_POR_PAGINA);
+  const vinculosPaginados = vinculosFiltrados.slice(
+    (paginaActual - 1) * ITEMS_POR_PAGINA,
+    paginaActual * ITEMS_POR_PAGINA,
+  );
+
+  useEffect(() => {
+    if (paginaActual > totalPaginas) {
+      setPaginaActual(totalPaginas || 1);
+    }
+  }, [paginaActual, totalPaginas]);
+
+  const irAPagina = (n) => {
+    if (n < 1 || n > totalPaginas) return;
+    setPaginaActual(n);
+  };
+
+  const generarPaginas = () => {
+    let inicio = Math.max(1, paginaActual - 2);
+    let fin = Math.min(totalPaginas, inicio + 4);
+    if (fin - inicio < 4) inicio = Math.max(1, fin - 4);
+    const paginas = [];
+    for (let i = inicio; i <= fin; i += 1) paginas.push(i);
+    return paginas;
+  };
 
   useEffect(() => {
     cargarDatos();
@@ -404,7 +433,7 @@ function VincularPadreHijo() {
                     </tr>
                   </thead>
                   <tbody>
-                    {vinculosFiltrados.length === 0 ? (
+                    {vinculosPaginados.length === 0 ? (
                       <tr>
                         <td
                           colSpan="3"
@@ -414,7 +443,7 @@ function VincularPadreHijo() {
                         </td>
                       </tr>
                     ) : (
-                      vinculosFiltrados.map((v) => (
+                      vinculosPaginados.map((v) => (
                         <tr
                           key={v.idPadreEstudiante}
                           style={{ borderBottom: "1px solid #f1f5f9" }}
@@ -467,6 +496,62 @@ function VincularPadreHijo() {
                   </tbody>
                 </table>
               </div>
+
+              {/* PAGINACION */}
+              {totalPaginas > 1 && (
+                <div className="d-flex justify-content-between align-items-center px-4 py-3" style={{ borderTop: "1px solid #f1f5f9" }}>
+                  <span className="text-muted small fw-medium">
+                    Página {paginaActual} de {totalPaginas}
+                  </span>
+                  <div className="d-flex align-items-center gap-2">
+                    <button
+                      onClick={() => irAPagina(paginaActual - 1)}
+                      disabled={paginaActual === 1}
+                      style={{
+                        width: "36px", height: "36px", borderRadius: "10px",
+                        border: "1px solid #e5e7eb",
+                        backgroundColor: paginaActual === 1 ? "#f9fafb" : "#fff",
+                        color: paginaActual === 1 ? "#d1d5db" : "#115133",
+                        cursor: paginaActual === 1 ? "not-allowed" : "pointer",
+                        display: "flex", alignItems: "center", justifyContent: "center",
+                      }}
+                    >
+                      <FaChevronLeft size={12} />
+                    </button>
+                    {generarPaginas().map((n) => (
+                      <button
+                        key={n}
+                        onClick={() => irAPagina(n)}
+                        style={{
+                          width: "36px", height: "36px", borderRadius: "10px",
+                          border: n === paginaActual ? "none" : "1px solid #e5e7eb",
+                          backgroundColor: n === paginaActual ? "#115133" : "#fff",
+                          color: n === paginaActual ? "#fff" : "#374151",
+                          fontWeight: n === paginaActual ? "700" : "500",
+                          cursor: "pointer",
+                          display: "flex", alignItems: "center", justifyContent: "center", fontSize: "14px",
+                        }}
+                      >
+                        {n}
+                      </button>
+                    ))}
+                    <button
+                      onClick={() => irAPagina(paginaActual + 1)}
+                      disabled={paginaActual === totalPaginas}
+                      style={{
+                        width: "36px", height: "36px", borderRadius: "10px",
+                        border: "1px solid #e5e7eb",
+                        backgroundColor: paginaActual === totalPaginas ? "#f9fafb" : "#fff",
+                        color: paginaActual === totalPaginas ? "#d1d5db" : "#115133",
+                        cursor: paginaActual === totalPaginas ? "not-allowed" : "pointer",
+                        display: "flex", alignItems: "center", justifyContent: "center",
+                      }}
+                    >
+                      <FaChevronRight size={12} />
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>

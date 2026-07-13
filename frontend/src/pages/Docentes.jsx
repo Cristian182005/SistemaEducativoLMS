@@ -1,4 +1,14 @@
 import { useEffect, useState } from "react";
+import {
+  FaPlus,
+  FaSearch,
+  FaUserTie,
+  FaPen,
+  FaTrashAlt,
+  FaArrowLeft,
+  FaChevronLeft,
+  FaChevronRight,
+} from "react-icons/fa";
 import Sidebar from "../components/Sidebar";
 import {
   listarDocentes,
@@ -23,6 +33,41 @@ function Docentes() {
 
   const [editando, setEditando] = useState(false);
   const [idDocente, setIdDocente] = useState(null);
+
+  const [searchTerm, setSearchTerm] = useState("");
+  const [paginaActual, setPaginaActual] = useState(1);
+  const ITEMS_POR_PAGINA = 5;
+
+  const docentesFiltrados = docentes.filter((docente) => {
+    const valor = `${docente.nombres} ${docente.apellidos} ${docente.dni} ${docente.especialidad}`.toLowerCase();
+    return valor.includes(searchTerm.toLowerCase());
+  });
+
+  const totalPaginas = Math.ceil(docentesFiltrados.length / ITEMS_POR_PAGINA);
+  const docentesPaginados = docentesFiltrados.slice(
+    (paginaActual - 1) * ITEMS_POR_PAGINA,
+    paginaActual * ITEMS_POR_PAGINA,
+  );
+
+  useEffect(() => {
+    if (paginaActual > totalPaginas) {
+      setPaginaActual(totalPaginas || 1);
+    }
+  }, [paginaActual, totalPaginas]);
+
+  const irAPagina = (n) => {
+    if (n < 1 || n > totalPaginas) return;
+    setPaginaActual(n);
+  };
+
+  const generarPaginas = () => {
+    let inicio = Math.max(1, paginaActual - 2);
+    let fin = Math.min(totalPaginas, inicio + 4);
+    if (fin - inicio < 4) inicio = Math.max(1, fin - 4);
+    const paginas = [];
+    for (let i = inicio; i <= fin; i += 1) paginas.push(i);
+    return paginas;
+  };
 
   // LISTAR DOCENTES
   const obtenerDocentes = async () => {
@@ -144,18 +189,35 @@ function Docentes() {
         
         {/* PANEL DE CONTROL - CABECERA CON COLORES DEL COLEGIO */}
         <div className="card border-0 shadow-sm p-4 mb-4" style={{ borderRadius: "16px", background: "linear-gradient(135deg, #115133 0%, #1a6b45 100%)", color: "#fff" }}>
-          <div className="d-flex justify-content-between align-items-center flex-wrap gap-3">
-            <div>
+          <div className="d-flex flex-column flex-lg-row justify-content-between align-items-start align-items-lg-center gap-3">
+            <div className="flex-grow-1">
               <h2 className="fw-extrabold m-0" style={{ letterSpacing: "-0.5px", fontSize: "26px" }}>Módulo de Docentes</h2>
               <p className="text-white-50 small m-0 mt-1 fw-medium">Gestión Académica • C.E.P. La Sagrada Familia</p>
             </div>
             
-            <div>
+            <div className="d-flex flex-column flex-sm-row gap-2 align-items-stretch align-items-sm-center ms-lg-auto" style={{ minWidth: "260px" }}>
+              <div className="input-group rounded-4 overflow-hidden" style={{ minWidth: "220px", maxWidth: "260px", width: "100%" }}>
+                <span className="input-group-text bg-white border-0 px-3">
+                  <FaSearch className="text-muted" />
+                </span>
+                <input
+                  type="search"
+                  className="form-control border-0"
+                  placeholder="Buscar docente..."
+                  value={searchTerm}
+                  onChange={(e) => {
+                    setSearchTerm(e.target.value);
+                    setPaginaActual(1);
+                  }}
+                  style={{ backgroundColor: "#eff2f7" }}
+                />
+              </div>
+
               {!docenteSeleccionado ? (
                 <button 
-                  className="btn btn-md fw-bold shadow-sm px-4 text-white"
+                  className="btn btn-light btn-md fw-bold shadow-sm text-white d-flex align-items-center gap-2"
                   style={{ 
-                    borderRadius: "10px", 
+                    borderRadius: "12px", 
                     backgroundColor: mostrarFormulario ? "#7a1b1b" : "#145c3a", 
                     border: "1px solid rgba(255,255,255,0.2)",
                     transition: "all 0.3s ease"
@@ -165,15 +227,15 @@ function Docentes() {
                     setMostrarFormulario(!mostrarFormulario);
                   }}
                 >
-                  {mostrarFormulario ? "✕ Cancelar y Volver" : "＋ Registrar Nuevo Docente"}
+                  {mostrarFormulario ? "✕ Cancelar" : <><FaPlus /> Registrar Docente</>}
                 </button>
               ) : (
                 <button 
-                  className="btn btn-light btn-md fw-bold shadow-sm px-4" 
-                  style={{ borderRadius: "10px", color: "#115133" }} 
+                  className="btn btn-light btn-md fw-bold shadow-sm px-4 d-flex align-items-center gap-2" 
+                  style={{ borderRadius: "12px", color: "#115133" }} 
                   onClick={() => setDocenteSeleccionado(null)}
                 >
-                  ← Regresar al Listado
+                  <FaArrowLeft /> Regresar al Listado
                 </button>
               )}
             </div>
@@ -236,14 +298,16 @@ function Docentes() {
         {/* VISTA 2: LISTADO DE DOCENTES (CON SCROLLBAR INTEGRADO) */}
         {!mostrarFormulario && !docenteSeleccionado && (
           <div className="card border-0 shadow-sm" style={{ borderRadius: "20px", overflow: "hidden", backgroundColor: "#fff" }}>
-            <div className="p-4 bg-white d-flex justify-content-between align-items-center" style={{ borderBottom: "1px solid #f1f5f9" }}>
-              <h5 className="fw-bold m-0 text-dark" style={{ fontSize: "18px" }}>Plana de Profesores Activos</h5>
+            <div className="p-4 bg-white d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3" style={{ borderBottom: "1px solid #f1f5f9" }}>
+              <div>
+                <h5 className="fw-bold m-0 text-dark" style={{ fontSize: "18px" }}>Plana de Profesores Activos</h5>
+                <p className="text-muted small mb-0">{docentesFiltrados.length} resultados de {docentes.length} docentes</p>
+              </div>
               <span className="badge px-3 py-2 fw-bold" style={{ backgroundColor: "#eef7f2", color: "#115133", borderRadius: "8px", border: "1px solid #d1ebd9" }}>
                 Total: {docentes.length} Docentes
               </span>
             </div>
             
-            {/* Aquí agregamos la barra de desplazamiento interna con una altura máxima cómoda */}
             <div className="table-responsive" style={{ maxHeight: "520px", overflowY: "auto" }}>
               <table className="table table-hover align-middle mb-0">
                 <thead style={{ backgroundColor: "#f8f9fa", position: "sticky", top: 0, zIndex: 1 }}>
@@ -256,14 +320,14 @@ function Docentes() {
                   </tr>
                 </thead>
                 <tbody>
-                  {docentes.length === 0 ? (
+                  {docentesPaginados.length === 0 ? (
                     <tr>
                       <td colSpan="5" className="text-center py-5 text-muted fw-semibold">
-                        📂 No hay docentes registrados en este momento.
+                        No se encontraron docentes con ese filtro.
                       </td>
                     </tr>
                   ) : (
-                    docentes.map((docente) => (
+                    docentesPaginados.map((docente) => (
                       <tr key={docente.idDocente} style={{ borderBottom: "1px solid #f1f5f9" }}>
                         <td className="ps-4 py-3">
                           <div className="d-flex align-items-center">
@@ -360,6 +424,75 @@ function Docentes() {
                 </tbody>
               </table>
             </div>
+
+            {/* PAGINACION */}
+            {totalPaginas > 1 && (
+              <div className="d-flex justify-content-between align-items-center px-4 py-3" style={{ borderTop: "1px solid #f1f5f9" }}>
+                <span className="text-muted small fw-medium">
+                  Página {paginaActual} de {totalPaginas}
+                </span>
+                <div className="d-flex align-items-center gap-2">
+                  <button
+                    onClick={() => irAPagina(paginaActual - 1)}
+                    disabled={paginaActual === 1}
+                    style={{
+                      width: "36px",
+                      height: "36px",
+                      borderRadius: "10px",
+                      border: "1px solid #e5e7eb",
+                      backgroundColor: paginaActual === 1 ? "#f9fafb" : "#fff",
+                      color: paginaActual === 1 ? "#d1d5db" : "#115133",
+                      cursor: paginaActual === 1 ? "not-allowed" : "pointer",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <FaChevronLeft size={12} />
+                  </button>
+                  {generarPaginas().map((n) => (
+                    <button
+                      key={n}
+                      onClick={() => irAPagina(n)}
+                      style={{
+                        width: "36px",
+                        height: "36px",
+                        borderRadius: "10px",
+                        border: n === paginaActual ? "none" : "1px solid #e5e7eb",
+                        backgroundColor: n === paginaActual ? "#115133" : "#fff",
+                        color: n === paginaActual ? "#fff" : "#374151",
+                        fontWeight: n === paginaActual ? "700" : "500",
+                        cursor: "pointer",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        fontSize: "14px",
+                      }}
+                    >
+                      {n}
+                    </button>
+                  ))}
+                  <button
+                    onClick={() => irAPagina(paginaActual + 1)}
+                    disabled={paginaActual === totalPaginas}
+                    style={{
+                      width: "36px",
+                      height: "36px",
+                      borderRadius: "10px",
+                      border: "1px solid #e5e7eb",
+                      backgroundColor: paginaActual === totalPaginas ? "#f9fafb" : "#fff",
+                      color: paginaActual === totalPaginas ? "#d1d5db" : "#115133",
+                      cursor: paginaActual === totalPaginas ? "not-allowed" : "pointer",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <FaChevronRight size={12} />
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         )}
 
