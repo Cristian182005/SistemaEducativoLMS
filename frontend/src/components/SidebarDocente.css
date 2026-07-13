@@ -1,0 +1,291 @@
+.sidebar {
+  width: 270px;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  background: white;
+  border-right: 1px solid #e5e7eb;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+  transition: 0.3s ease;
+}
+
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 25px;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.sidebar-logo {
+  width: 45px;
+  height: 45px;
+  object-fit: contain;
+}
+
+.sidebar-title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.sidebar-subtitle {
+  margin: 0;
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.menu-section {
+  padding: 20px 25px 10px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #9ca3af;
+  letter-spacing: 1px;
+}
+
+.menu-item {
+  margin: 4px 15px;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  border-radius: 12px;
+  color: #6b7280;
+  font-weight: 500;
+  transition: all 0.25s ease;
+}
+
+.menu-item:hover {
+  background: #14532d;
+  color: white;
+}
+
+.menu-item.active {
+  background: #115133;
+  color: white;
+  box-shadow: 0 4px 12px rgba(17, 81, 51, 0.3);
+}
+
+.menu-item svg {
+  font-size: 18px;
+}
+
+.sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 10px;
+}
+
+.sidebar.collapsed {
+  width: 90px;
+}
+
+.toggle-sidebar {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 12px 18px;
+}
+
+.sidebar.collapsed .toggle-sidebar {
+  justify-content: center;
+}
+
+.toggle-sidebar svg {
+  font-size: 38px;
+  color: #115133;
+  padding: 8px;
+  border-radius: 10px;
+  transition: background 0.2s ease;
+  cursor: pointer;
+}
+
+.toggle-sidebar svg:hover {
+  background: #f1f5f9;
+}
+
+.sidebar.collapsed .menu-section {
+  display: none;
+}
+
+.sidebar.collapsed .sidebar-title,
+.sidebar.collapsed .sidebar-subtitle {
+  display: none;
+}
+
+.sidebar.collapsed .sidebar-header {
+  justify-content: center;
+}
+
+.sidebar.collapsed .menu-item {
+  justify-content: center;
+}
+
+.sidebar.collapsed .menu-item span {
+  display: none;
+}
+
+.sidebar.collapsed .sidebar-logo {
+  width: 42px;
+  height: 42px;
+}
+
+.sidebar-footer {
+  padding: 20px;
+  border-top: 1px solid #e5e7eb;
+  position: relative;
+}
+
+.user-profile-button {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  cursor: pointer;
+  background: #f8fafc;
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.user-profile-button:hover {
+  background: #f1f5f9;
+}
+
+.user-profile-button.open {
+  background: #eef2ff;
+}
+
+.avatar-circle {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #e5e7eb;
+  flex-shrink: 0;
+}
+
+.avatar-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.user-greeting {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+}
+
+.user-hello {
+  font-size: 12px;
+  color: #6b7280;
+  line-height: 1.1;
+}
+
+.user-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: #111827;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.user-menu {
+  position: absolute;
+  left: 20px;
+  right: 20px;
+  bottom: 84px;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.12);
+  z-index: 20;
+  overflow: hidden;
+  min-width: 180px;
+}
+
+.sidebar.collapsed .user-menu {
+  min-width: 0;
+  max-height: none;
+  overflow: visible;
+}
+
+.sidebar.collapsed .sidebar-footer {
+  padding: 12px 0;
+}
+
+.sidebar.collapsed .user-profile-button {
+  justify-content: center;
+  padding: 10px 0;
+  width: 100%;
+}
+
+.sidebar.collapsed .user-profile-button .user-greeting {
+  display: none;
+}
+
+.sidebar.collapsed .user-menu {
+  left: calc(50% - 32px);
+  right: auto;
+  width: 64px;
+  bottom: 88px;
+  top: auto;
+  transform: none;
+}
+
+.user-menu-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  padding: 10px 0;
+  cursor: pointer;
+  color: #111827;
+  font-size: 14px;
+  transition: background 0.2s ease;
+  white-space: nowrap;
+}
+
+.user-menu-item.icon-only {
+  justify-content: center;
+  padding: 12px 0;
+  width: 100%;
+}
+
+.user-menu-item.icon-only span {
+  display: none;
+}
+
+.user-menu-item.icon-only svg {
+  width: 20px;
+  height: 20px;
+}
+
+.user-menu-item:hover {
+  background: #f8fafc;
+}
+
+.user-menu-item.logout {
+  color: #b91c1c;
+}
+
+.user-menu-item svg {
+  font-size: 14px;
+}

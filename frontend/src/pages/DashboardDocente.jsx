@@ -1,16 +1,18 @@
 import { useEffect, useState } from "react";
 import {
+  FaBook,
   FaBookOpen,
   FaBullhorn,
-  FaChalkboardTeacher,
   FaCheckCircle,
-  FaClock,
   FaExclamationTriangle,
   FaFilePdf,
   FaFolder,
+  FaHome,
+  FaLayerGroup,
   FaPlus,
-  FaRegCalendarAlt,
   FaSave,
+  FaTasks,
+  FaTachometerAlt,
   FaTimes,
   FaTrashAlt,
   FaUpload,
@@ -20,6 +22,7 @@ import {
 import { useNavigate } from "react-router-dom";
 
 import SidebarDocente from "../components/SidebarDocente";
+import CalendarioDashboard from "../components/CalendarioDashboard";
 import { listarCursos } from "../services/cursoService";
 import { obtenerResumen } from "../services/dashboardService";
 import {
@@ -269,29 +272,21 @@ function DashboardDocente() {
   };
   const usuario = obtenerUsuario();
 
-  // Generación manual de la malla de días del mini calendario
-  const obtenerDiasCalendario = () => {
-    const año = fechaActual.getFullYear();
-    const mes = fechaActual.getMonth();
-    const primerDiaMes = new Date(año, mes, 1).getDay();
-    const totalDias = new Date(año, mes + 1, 0).getDate();
-
-    const dias = [];
-    const espaciosInicio = primerDiaMes === 0 ? 6 : primerDiaMes - 1;
-
-    for (let i = 0; i < espaciosInicio; i++) {
-      dias.push(null);
-    }
-    for (let i = 1; i <= totalDias; i++) {
-      dias.push(i);
-    }
-    return dias;
-  };
-  const diasCalendario = obtenerDiasCalendario();
-  const nombreMes = fechaActual.toLocaleString("es-ES", { month: "long" });
-
   const manejarNavegacion = (seccion) => {
-    setVistaActiva(seccion);
+    const mapaVistas = {
+      "cursos": "cursos",
+      "mis-cursos": "mis-cursos",
+      "contenido": "contenido",
+      "tareas-evaluaciones": "tareas-evaluaciones",
+      "calificaciones": "calificaciones",
+      "asistencia": "asistencia",
+      "foro": "comunicados",
+      "comunicados": "comunicados",
+      "horario": "cursos",
+      "reportes": "calificaciones",
+      "perfil": "cursos",
+    };
+    setVistaActiva(mapaVistas[seccion] || seccion);
   };
 
   const cerrarSesion = () => {
@@ -448,110 +443,274 @@ function DashboardDocente() {
         )}
 
         {/* ========================================== */}
-        {/* VISTA 1: MIS CURSOS (PANEL PRINCIPAL)      */}
+        {/* VISTA: LISTA DE MIS CURSOS                 */}
+        {/* ========================================== */}
+        {vistaActiva === "mis-cursos" && (
+          <div style={{ textAlign: "left" }}>
+            <div
+              style={{
+                background: "#ffffff",
+                borderRadius: "18px",
+                padding: "25px",
+                marginBottom: "30px",
+                boxShadow: "0 3px 12px rgba(0,0,0,0.06)",
+              }}
+            >
+              <div style={{ display: "flex", alignItems: "center", gap: "15px" }}>
+                <div
+                  style={{
+                    width: "65px",
+                    height: "65px",
+                    borderRadius: "15px",
+                    background: "#115133",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    color: "white",
+                    fontSize: "28px",
+                  }}
+                >
+                  <FaLayerGroup />
+                </div>
+                <div>
+                  <h2 style={{ margin: 0, fontWeight: "700", color: "#0f172a" }}>
+                    Mis Cursos Asignados
+                  </h2>
+                  <p style={{ margin: 0, color: "#64748b", fontSize: "15px" }}>
+                    <FaHome /> Home &nbsp; &gt; &nbsp; Mis Cursos
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+                gap: "24px",
+              }}
+            >
+              {cursosDisponibles.map((curso) => {
+                const tareasCurso = tareasVisibles.filter(
+                  (t) => String(t.cursoId) === String(curso.idCurso),
+                );
+                const materialesCurso = archivosVisibles.filter(
+                  (m) => String(m.cursoId) === String(curso.idCurso),
+                );
+                return (
+                  <div
+                    key={curso.idCurso}
+                    style={{
+                      backgroundColor: "#ffffff",
+                      borderRadius: "20px",
+                      padding: "28px",
+                      border: "1px solid #e2e8f0",
+                      boxShadow: "0 4px 12px rgba(0,0,0,0.04)",
+                      transition: "0.3s",
+                      cursor: "pointer",
+                    }}
+                    onClick={() => setVistaActiva("cursos")}
+                  >
+                    <div
+                      style={{
+                        width: "50px",
+                        height: "50px",
+                        borderRadius: "14px",
+                        background: "rgba(17, 81, 51, 0.08)",
+                        color: "#115133",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        fontSize: "22px",
+                        marginBottom: "16px",
+                      }}
+                    >
+                      <FaBookOpen />
+                    </div>
+                    <h3 style={{ margin: "0 0 8px 0", fontSize: "18px", color: "#1e293b", fontWeight: "700" }}>
+                      {curso.nombre}
+                    </h3>
+                    <p style={{ margin: "0 0 16px 0", color: "#64748b", fontSize: "14px" }}>
+                      {curso.descripcion || "Sin descripcion"}
+                    </p>
+                    <div style={{ display: "flex", gap: "16px", flexWrap: "wrap" }}>
+                      <span
+                        style={{
+                          display: "inline-flex",
+                          alignItems: "center",
+                          gap: "6px",
+                          fontSize: "13px",
+                          color: "#475569",
+                          backgroundColor: "#f1f5f9",
+                          padding: "6px 12px",
+                          borderRadius: "8px",
+                        }}
+                      >
+                        <FaTasks style={{ color: "#115133" }} /> {tareasCurso.length} tareas
+                      </span>
+                      <span
+                        style={{
+                          display: "inline-flex",
+                          alignItems: "center",
+                          gap: "6px",
+                          fontSize: "13px",
+                          color: "#475569",
+                          backgroundColor: "#f1f5f9",
+                          padding: "6px 12px",
+                          borderRadius: "8px",
+                        }}
+                      >
+                        <FaBook style={{ color: "#115133" }} /> {materialesCurso.length} materiales
+                      </span>
+                    </div>
+                  </div>
+                );
+              })}
+              {cursosDisponibles.length === 0 && (
+                <div
+                  style={{
+                    gridColumn: "1 / -1",
+                    padding: "60px 20px",
+                    textAlign: "center",
+                    color: "#94a3b8",
+                    backgroundColor: "#ffffff",
+                    borderRadius: "20px",
+                    border: "1px solid #e2e8f0",
+                  }}
+                >
+                  No tienes cursos asignados actualmente.
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* ========================================== */}
+        {/* VISTA 1: DASHBOARD (PANEL PRINCIPAL)       */}
         {/* ========================================== */}
         {vistaActiva === "cursos" && (
           <>
+            {/* HEADER ESTILO ADMIN */}
             <div
               style={{
-                fontSize: "13px",
-                color: "#64748b",
-                marginBottom: "15px",
-                textAlign: "left",
+                background: "#ffffff",
+                borderRadius: "18px",
+                padding: "25px",
+                marginBottom: "30px",
+                boxShadow: "0 3px 12px rgba(0,0,0,0.06)",
               }}
             >
-              Portal docente &nbsp;/&nbsp;{" "}
-              <span style={{ color: "#115133", fontWeight: "600" }}>
-                Mis cursos Ahora
-              </span>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                }}
+              >
+                <div style={{ display: "flex", alignItems: "center", gap: "15px" }}>
+                  <div
+                    style={{
+                      width: "65px",
+                      height: "65px",
+                      borderRadius: "15px",
+                      background: "#115133",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      color: "white",
+                      fontSize: "28px",
+                    }}
+                  >
+                    <FaTachometerAlt />
+                  </div>
+                  <div>
+                    <h2 style={{ margin: 0, fontWeight: "700", color: "#0f172a" }}>
+                      Portal Docente
+                    </h2>
+                    <p style={{ margin: 0, color: "#64748b", fontSize: "15px" }}>
+                      <FaHome /> Home &nbsp; &gt; &nbsp; Dashboard
+                    </p>
+                  </div>
+                </div>
+                <div style={{ display: "flex", gap: "12px" }}>
+                  <button
+                    onClick={() => setVistaActiva("contenido")}
+                    style={{
+                      backgroundColor: "#f1f5f9",
+                      color: "#475569",
+                      border: "none",
+                      padding: "12px 24px",
+                      borderRadius: "12px",
+                      fontWeight: "600",
+                      fontSize: "14px",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "10px",
+                      cursor: "pointer",
+                    }}
+                  >
+                    <FaUpload /> Subir contenido
+                  </button>
+                  <button
+                    onClick={() => setVistaActiva("tareas-evaluaciones")}
+                    style={{
+                      backgroundColor: "#115133",
+                      color: "#ffffff",
+                      border: "none",
+                      padding: "12px 24px",
+                      borderRadius: "12px",
+                      fontWeight: "700",
+                      fontSize: "14px",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "10px",
+                      boxShadow: "0 4px 12px rgba(17,81,51,0.15)",
+                      cursor: "pointer",
+                    }}
+                  >
+                    <FaPlus style={{ color: "#D4AF37" }} /> Nueva tarea
+                  </button>
+                </div>
+              </div>
             </div>
 
-            <section
-              style={{
-                background: "linear-gradient(135deg, #115133 0%, #1a6b45 100%)",
-                borderRadius: "20px",
-                padding: "35px",
-                color: "#ffffff",
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                boxShadow: "0 10px 25px rgba(17, 81, 51, 0.12)",
-                marginBottom: "30px",
-              }}
-            >
-              <div style={{ textAlign: "left", zIndex: 2 }}>
-                <span
-                  style={{
-                    backgroundColor: "rgba(255, 255, 255, 0.15)",
-                    padding: "4px 12px",
-                    borderRadius: "30px",
-                    fontSize: "12px",
-                    fontWeight: "600",
-                  }}
-                >
-                  {cursosDisponibles.length > 0
-                    ? `${cursosDisponibles.length} curso${cursosDisponibles.length > 1 ? "s" : ""} disponible${cursosDisponibles.length > 1 ? "s" : ""}`
-                    : "Sin curso activo"}
-                </span>
-                <h1
-                  style={{
-                    fontSize: "36px",
-                    fontWeight: "800",
-                    margin: "12px 0 6px 0",
-                    fontFamily: "'Poppins', sans-serif",
-                    color: "#ffffff",
-                  }}
-                >
-                  Mis cursos
-                </h1>
-                <p style={{ color: "#a3d9b1", fontSize: "15px", margin: 0 }}>
-                  Bienvenido, {usuario.nombre}. Aún no tienes cursos asignados
-                  en este bloque.
-                </p>
+            {/* SECCION DOS COLUMNAS */}
+            <div className="row">
+              <div className="col-md-3 mb-4">
+                <CardDashboard
+                  titulo="Mis cursos"
+                  numero={resumen.cursos || cursosDisponibles.length}
+                  color="#115133"
+                  icon={<FaLayerGroup />}
+                />
               </div>
-
-              <div style={{ display: "flex", gap: "15px", zIndex: 2 }}>
-                <button
-                  onClick={() => setVistaActiva("contenido")}
-                  style={{
-                    backgroundColor: "rgba(255, 255, 255, 0.12)",
-                    color: "#ffffff",
-                    border: "1px solid rgba(255, 255, 255, 0.25)",
-                    padding: "12px 24px",
-                    borderRadius: "12px",
-                    fontWeight: "600",
-                    fontSize: "14px",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "10px",
-                    cursor: "pointer",
-                  }}
-                >
-                  <FaUpload /> Subir contenido
-                </button>
-                <button
-                  onClick={() => setVistaActiva("tareas-evaluaciones")}
-                  style={{
-                    backgroundColor: "#ffffff",
-                    color: "#115133",
-                    border: "none",
-                    padding: "12px 24px",
-                    borderRadius: "12px",
-                    fontWeight: "700",
-                    fontSize: "14px",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "10px",
-                    boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
-                    cursor: "pointer",
-                  }}
-                >
-                  <FaPlus style={{ color: "#D4AF37" }} /> Nueva tarea
-                </button>
+              <div className="col-md-3 mb-4">
+                <CardDashboard
+                  titulo="Estudiantes"
+                  numero={resumen.estudiantes}
+                  color="#14532d"
+                  icon={<FaBookOpen />}
+                />
               </div>
-            </section>
+              <div className="col-md-3 mb-4">
+                <CardDashboard
+                  titulo="Tareas activas"
+                  numero={tareasActivas}
+                  color="#7f1d1d"
+                  icon={<FaTasks />}
+                />
+              </div>
+              <div className="col-md-3 mb-4">
+                <CardDashboard
+                  titulo="Por calificar"
+                  numero={Math.max(tareasActivas - 1, 0)}
+                  color="#0d3b2e"
+                  icon={<FaCheckCircle />}
+                />
+              </div>
+            </div>
 
-            {/* SECCIÓN DOS COLUMNAS */}
+            {/* SECCION DOS COLUMNAS */}
             <div
               style={{
                 display: "flex",
@@ -570,181 +729,6 @@ function DashboardDocente() {
                   minWidth: "320px",
                 }}
               >
-                <div
-                  style={{
-                    display: "grid",
-                    gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
-                    gap: "20px",
-                    width: "100%",
-                  }}
-                >
-                  <div
-                    style={{
-                      backgroundColor: "#ffffff",
-                      padding: "20px",
-                      borderRadius: "16px",
-                      border: "1px solid #e2e8f0",
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "15px",
-                      textAlign: "left",
-                    }}
-                  >
-                    <div
-                      style={{
-                        width: "45px",
-                        height: "45px",
-                        borderRadius: "12px",
-                        backgroundColor: "rgba(17, 81, 51, 0.08)",
-                        color: "#115133",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                      }}
-                    >
-                      <FaChalkboardTeacher />
-                    </div>
-                    <div>
-                      <span
-                        style={{
-                          color: "#64748b",
-                          fontSize: "13px",
-                          display: "block",
-                        }}
-                      >
-                        Mis cursos
-                      </span>
-                      <strong style={{ fontSize: "20px", color: "#1e293b" }}>
-                        {resumen.cursos || cursosDisponibles.length}
-                      </strong>
-                    </div>
-                  </div>
-                  <div
-                    style={{
-                      backgroundColor: "#ffffff",
-                      padding: "20px",
-                      borderRadius: "16px",
-                      border: "1px solid #e2e8f0",
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "15px",
-                      textAlign: "left",
-                    }}
-                  >
-                    <div
-                      style={{
-                        width: "45px",
-                        height: "45px",
-                        borderRadius: "12px",
-                        backgroundColor: "rgba(17, 81, 51, 0.08)",
-                        color: "#115133",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                      }}
-                    >
-                      <FaBookOpen />
-                    </div>
-                    <div>
-                      <span
-                        style={{
-                          color: "#64748b",
-                          fontSize: "13px",
-                          display: "block",
-                        }}
-                      >
-                        Estudiantes
-                      </span>
-                      <strong style={{ fontSize: "20px", color: "#1e293b" }}>
-                        {resumen.estudiantes}
-                      </strong>
-                    </div>
-                  </div>
-                  <div
-                    style={{
-                      backgroundColor: "#ffffff",
-                      padding: "20px",
-                      borderRadius: "16px",
-                      border: "1px solid #e2e8f0",
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "15px",
-                      textAlign: "left",
-                    }}
-                  >
-                    <div
-                      style={{
-                        width: "45px",
-                        height: "45px",
-                        borderRadius: "12px",
-                        backgroundColor: "rgba(17, 81, 51, 0.08)",
-                        color: "#115133",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                      }}
-                    >
-                      <FaClock />
-                    </div>
-                    <div>
-                      <span
-                        style={{
-                          color: "#64748b",
-                          fontSize: "13px",
-                          display: "block",
-                        }}
-                      >
-                        Tareas activas
-                      </span>
-                      <strong style={{ fontSize: "20px", color: "#1e293b" }}>
-                        {tareasActivas}
-                      </strong>
-                    </div>
-                  </div>
-                  <div
-                    style={{
-                      background:
-                        "linear-gradient(135deg, #166534 0%, #115133 100%)",
-                      padding: "20px",
-                      borderRadius: "16px",
-                      color: "#ffffff",
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "15px",
-                      textAlign: "left",
-                    }}
-                  >
-                    <div
-                      style={{
-                        width: "45px",
-                        height: "45px",
-                        borderRadius: "12px",
-                        backgroundColor: "rgba(255, 255, 255, 0.2)",
-                        color: "#ffffff",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                      }}
-                    >
-                      <FaCheckCircle />
-                    </div>
-                    <div>
-                      <span
-                        style={{
-                          color: "#bbf7d0",
-                          fontSize: "13px",
-                          display: "block",
-                        }}
-                      >
-                        Por calificar
-                      </span>
-                      <strong style={{ fontSize: "20px" }}>
-                        {Math.max(tareasActivas - 1, 0)}
-                      </strong>
-                    </div>
-                  </div>
-                </div>
-
                 <section
                   style={{
                     backgroundColor: "#ffffff",
@@ -887,77 +871,7 @@ function DashboardDocente() {
                   minWidth: "270px",
                 }}
               >
-                <section
-                  style={{
-                    backgroundColor: "#ffffff",
-                    borderRadius: "20px",
-                    padding: "20px",
-                    border: "1px solid #e2e8f0",
-                  }}
-                >
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "10px",
-                      marginBottom: "15px",
-                      borderBottom: "1px solid #f1f5f9",
-                      paddingBottom: "12px",
-                    }}
-                  >
-                    <FaRegCalendarAlt style={{ color: "#115133" }} />
-                    <h3
-                      style={{
-                        fontSize: "14px",
-                        fontWeight: "700",
-                        textTransform: "capitalize",
-                        margin: 0,
-                      }}
-                    >
-                      {nombreMes} {fechaActual.getFullYear()}
-                    </h3>
-                  </div>
-                  <div
-                    style={{
-                      display: "grid",
-                      gridTemplateColumns: "repeat(7, 1fr)",
-                      gap: "6px",
-                      fontSize: "10px",
-                      fontWeight: "700",
-                      color: "#64748b",
-                      textAlign: "center",
-                    }}
-                  >
-                    <div>Lu</div>
-                    <div>Ma</div>
-                    <div>Mi</div>
-                    <div>Ju</div>
-                    <div>Vi</div>
-                    <div>Sá</div>
-                    <div>Do</div>
-                    {diasCalendario.map((dia, index) => {
-                      const esHoy = dia === fechaActual.getDate();
-                      return (
-                        <div
-                          key={index}
-                          style={{
-                            padding: "6px 0",
-                            borderRadius: "8px",
-                            fontSize: "11px",
-                            backgroundColor: esHoy ? "#115133" : "transparent",
-                            color: esHoy
-                              ? "#ffffff"
-                              : dia
-                                ? "#334155"
-                                : "transparent",
-                          }}
-                        >
-                          {dia || ""}
-                        </div>
-                      );
-                    })}
-                  </div>
-                </section>
+                <CalendarioDashboard />
               </div>
             </div>
           </>
@@ -2526,6 +2440,30 @@ function DashboardDocente() {
           </div>
         </div>
       )}
+    </div>
+  );
+}
+
+function CardDashboard({ titulo, numero, color, icon }) {
+  return (
+    <div
+      style={{
+        background: color,
+        borderRadius: "20px",
+        padding: "25px",
+        color: "white",
+        boxShadow: "0 5px 20px rgba(0,0,0,0.10)",
+        transition: "0.3s",
+        cursor: "pointer",
+      }}
+    >
+      <div className="d-flex justify-content-between align-items-center">
+        <div>
+          <h1 style={{ fontWeight: "700", marginBottom: "5px" }}>{numero}</h1>
+          <h5>{titulo}</h5>
+        </div>
+        <div style={{ fontSize: "55px", opacity: "0.25" }}>{icon}</div>
+      </div>
     </div>
   );
 }

@@ -71,13 +71,13 @@ function CalendarioDashboard() {
       <div
         key={dia}
         style={{
-          width: "38px",
-          height: "38px",
+          aspectRatio: "1",
           borderRadius: "10px",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
           fontWeight: "600",
+          fontSize: "13px",
           background: esHoy
             ? "#7f1d1d"
             : "transparent",
@@ -153,8 +153,7 @@ function CalendarioDashboard() {
       <div
         style={{
           display: "grid",
-          gridTemplateColumns:
-            "repeat(7, 1fr)",
+          gridTemplateColumns: "repeat(7, 1fr)",
           gap: "8px",
           textAlign: "center",
         }}
@@ -165,6 +164,7 @@ function CalendarioDashboard() {
             style={{
               fontWeight: "700",
               color: "#0d3b2e",
+              fontSize: "13px",
             }}
           >
             {dia}
