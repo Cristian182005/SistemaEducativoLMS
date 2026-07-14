@@ -10,12 +10,22 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 
+/**
+ * Repositorio que accede a la funcion de base de datos para registrar una tarea con sus calificaciones asociadas.
+ */
 @Repository
 public class TareaCalificacionRepository {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    /**
+     * Registra una tarea junto con las calificaciones de los estudiantes invocando la funcion de base de datos.
+     *
+     * @param dto DTO que contiene los datos de la tarea a registrar (curso, titulo, descripcion, fecha de entrega,
+     *            puntaje maximo, estado, grado y seccion).
+     * @return un {@link ResultadoTareaDTO} con el resultado de la insercion en la base de datos.
+     */
     public ResultadoTareaDTO registrarTareaConCalificaciones(TareaCalificacionDTO dto) {
 
         String sql = "{call fn_registrar_tarea_con_calificaciones(?,?,?,?,?,?,?,?)}";

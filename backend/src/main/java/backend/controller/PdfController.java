@@ -9,6 +9,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * Controlador REST para la generacion de documentos PDF (fichas de matricula, boletas, constancias y reportes).
+ */
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/api/pdf")
@@ -20,6 +23,12 @@ public class PdfController {
     // =========================
     // 1. FICHA DE MATRICULA
     // =========================
+    /**
+     * Genera la ficha de matricula de un estudiante en formato PDF.
+     *
+     * @param idEstudiante identificador del estudiante
+     * @return ResponseEntity con el bytes del PDF o error 404 si no se encuentra la ficha
+     */
     @GetMapping("/matricula/{idEstudiante}")
     public ResponseEntity<byte[]> generarFichaMatricula(
             @PathVariable Integer idEstudiante) {
@@ -40,6 +49,12 @@ public class PdfController {
     // =========================
     // 2. BOLETA DE CALIFICACIONES
     // =========================
+    /**
+     * Genera la boleta de calificaciones de un estudiante en formato PDF.
+     *
+     * @param idEstudiante identificador del estudiante
+     * @return ResponseEntity con el bytes del PDF o error 404 si no se encuentra la boleta
+     */
     @GetMapping("/boleta/{idEstudiante}")
     public ResponseEntity<byte[]> generarBoletaCalificaciones(
             @PathVariable Integer idEstudiante) {
@@ -60,6 +75,12 @@ public class PdfController {
     // =========================
     // 3. REPORTE GENERAL DE NOTAS POR CURSO
     // =========================
+    /**
+     * Genera un reporte general de notas de un curso en formato PDF.
+     *
+     * @param idCurso identificador del curso
+     * @return ResponseEntity con el bytes del PDF o error 404 si no se encuentra el reporte
+     */
     @GetMapping("/reporte-notas/{idCurso}")
     public ResponseEntity<byte[]> generarReporteGeneralNotas(
             @PathVariable Integer idCurso) {
@@ -80,6 +101,12 @@ public class PdfController {
     // =========================
     // 4. CONSTANCIA DE MATRICULA
     // =========================
+    /**
+     * Genera la constancia de matricula de un estudiante en formato PDF.
+     *
+     * @param idEstudiante identificador del estudiante
+     * @return ResponseEntity con el bytes del PDF o error 404 si no se encuentra la constancia
+     */
     @GetMapping("/constancia-matricula/{idEstudiante}")
     public ResponseEntity<byte[]> generarConstanciaMatricula(
             @PathVariable Integer idEstudiante) {
@@ -100,6 +127,13 @@ public class PdfController {
     // =========================
     // 5. LISTADO DE ESTUDIANTES
     // =========================
+    /**
+     * Genera el listado de estudiantes en formato PDF, con filtros opcionales de grado y seccion.
+     *
+     * @param grado grado para filtrar los estudiantes (opcional)
+     * @param seccion seccion para filtrar los estudiantes (opcional)
+     * @return ResponseEntity con el bytes del PDF o error 404 si no se encuentra el listado
+     */
     @GetMapping("/listado-estudiantes")
     public ResponseEntity<byte[]> generarListadoEstudiantes(
             @RequestParam(required = false) String grado,

@@ -16,12 +16,24 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.util.*;
 
+/**
+ * Repositorio que accede a la funcion de base de datos para registrar un estudiante
+ * completo con todos sus datos (matricula, estudiante, padre y solicitud).
+ */
 @Repository
 public class RegistroEstudianteRepository {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    /**
+     * Registra un estudiante completo ejecutando el procedimiento almacenado
+     * fn_registrar_estudiante_completo en la base de datos.
+     *
+     * @param dto Objeto de transferencia de datos que contiene toda la informacion
+     *            del estudiante, su padre y la solicitud de matricula.
+     * @return ResultadoRegistroDTO con los IDs generados y el estado de la operacion.
+     */
     public ResultadoRegistroDTO registrarEstudianteCompleto(RegistroEstudianteDTO dto) {
 
         String sql = "{call fn_registrar_estudiante_completo(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";

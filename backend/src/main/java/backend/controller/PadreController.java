@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * Controlador REST para la gestion de padres y apoderados, incluyendo consulta de hijos.
+ */
 @RestController
 @RequestMapping("/api/padres")
 @CrossOrigin("*")
@@ -23,16 +26,23 @@ public class PadreController {
     @Autowired
     private PadreEstudianteRepository padreEstudianteRepository;
 
-    // LISTAR
-
+    /**
+     * Lista todos los padres registrados.
+     *
+     * @return lista de padres
+     */
     @GetMapping
     public List<Padre> listarPadres() {
 
         return padreRepository.findAll();
     }
 
-    // OBTENER HIJOS DEL PADRE SEGÚN EL USUARIO LOGUEADO
-
+    /**
+     * Obtiene los hijos de un padre segun el ID del usuario logueado.
+     *
+     * @param idUsuario identificador del usuario padre
+     * @return lista de estudiantes hijos del padre
+     */
     @GetMapping("/usuario/{idUsuario}/hijos")
     public List<Estudiante> obtenerHijos(
             @PathVariable Integer idUsuario) {
@@ -53,8 +63,12 @@ public class PadreController {
                 .toList();
     }
 
-    // GUARDAR
-
+    /**
+     * Guarda un nuevo padre en el sistema.
+     *
+     * @param padre datos del padre a registrar
+     * @return padre creado
+     */
     @PostMapping
     public Padre guardarPadre(
             @RequestBody Padre padre) {
@@ -62,8 +76,13 @@ public class PadreController {
         return padreRepository.save(padre);
     }
 
-    // ACTUALIZAR
-
+    /**
+     * Actualiza los datos de un padre existente.
+     *
+     * @param id identificador del padre a actualizar
+     * @param padreActualizado datos actualizados del padre
+     * @return padre actualizado o null si no existe
+     */
     @PutMapping("/{id}")
     public Padre actualizarPadre(
             @PathVariable Integer id,
@@ -99,8 +118,11 @@ public class PadreController {
         return padreRepository.save(padre);
     }
 
-    // ELIMINAR
-
+    /**
+     * Elimina un padre por su ID.
+     *
+     * @param id identificador del padre a eliminar
+     */
     @DeleteMapping("/{id}")
     public void eliminarPadre(
             @PathVariable Integer id) {

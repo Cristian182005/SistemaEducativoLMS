@@ -11,12 +11,22 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Repositorio que accede a la funcion de base de datos para listar alumnos asignados a un curso especifico.
+ */
 @Repository
 public class AlumnoCursoRepository {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    /**
+     * Obtiene la lista de alumnos asignados a un curso determinado, filtrando por el docente propietario.
+     *
+     * @param idCurso  identificador del curso
+     * @param idDocente identificador del docente que imparte el curso
+     * @return lista de alumnos inscritos en el curso, representados como {@link AlumnoCursoDTO}
+     */
     public List<AlumnoCursoDTO> listarAlumnosCurso(String idCurso, String idDocente) {
 
         String sql = "{call fn_listar_alumnos_curso(?, ?)}";

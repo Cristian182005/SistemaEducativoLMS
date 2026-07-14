@@ -20,6 +20,9 @@ import org.springframework.web.client.RestTemplate;
 import java.io.ByteArrayOutputStream;
 import java.util.*;
 
+/**
+ * Servicio de integracion con Metabase para obtencion de datos de vistas y generacion de reportes PDF.
+ */
 @Service
 public class MetabaseService {
 
@@ -42,6 +45,12 @@ public class MetabaseService {
     // =========================
     // AUTENTICACION CON METABASE
     // =========================
+    /**
+     * Autentica en Metabase y obtiene un token de sesion.
+     * Si ya existe un token valido, lo reutiliza.
+     *
+     * @return token de sesion de Metabase, o null si falla la autenticacion
+     */
     public String autenticar() {
         if (sessionToken != null) return sessionToken;
 
@@ -70,6 +79,12 @@ public class MetabaseService {
     // =========================
     // OBTENER DATOS DE UNA VISTA
     // =========================
+    /**
+     * Obtiene los datos completos de una vista de Metabase mediante una consulta nativa.
+     *
+     * @param nombreVista nombre de la vista en Metabase
+     * @return mapa con las claves "columnas" (lista de nombres) y "filas" (lista de mapas fila)
+     */
     public Map<String, Object> obtenerDatosVista(String nombreVista) {
         String token = autenticar();
         Map<String, Object> resultado = new HashMap<>();
@@ -130,6 +145,12 @@ public class MetabaseService {
     // =========================
     // OBTENER COLUMNAS DE UNA VISTA
     // =========================
+    /**
+     * Obtiene solo los nombres de las columnas de una vista de Metabase.
+     *
+     * @param nombreVista nombre de la vista en Metabase
+     * @return lista con los nombres de las columnas, o lista vacia si falla
+     */
     public List<String> obtenerColumnas(String nombreVista) {
         String token = autenticar();
         if (token == null) return Collections.emptyList();
@@ -171,6 +192,12 @@ public class MetabaseService {
     // =========================
     // ENCABEZADO COMUN
     // =========================
+    /**
+     * Agrega el encabezado comun (logo del colegio, nombre y lema) al documento PDF.
+     *
+     * @param documento documento PDF al que se le agrega el encabezado
+     * @throws Exception si ocurre un error al insertar el encabezado
+     */
     private void agregarEncabezado(Document document) throws Exception {
         try {
             Image logo = Image.getInstance("src/main/resources/static/img/LogoColegio.jpg");
@@ -198,6 +225,13 @@ public class MetabaseService {
     // =========================
     // GENERAR PDF DESDE VISTA DE METABASE
     // =========================
+    /**
+     * Genera un documento PDF a partir de los datos de una vista de Metabase.
+     *
+     * @param nombreVista  nombre de la vista en Metabase
+     * @param tituloReporte titulo que se mostrara en el encabezado del reporte
+     * @return arreglo de bytes con el PDF generado, o null si ocurre un error
+     */
     public byte[] generarPdfDesdeVista(String nombreVista, String tituloReporte) {
         try {
             Map<String, Object> datosMap = obtenerDatosVista(nombreVista);
@@ -279,6 +313,11 @@ public class MetabaseService {
     // =========================
     // LISTAR VISTAS DISPONIBLES
     // =========================
+    /**
+     * Retorna la lista de vistas disponibles en Metabase.
+     *
+     * @return lista de nombres de vistas configuradas en el sistema
+     */
     public List<String> listarVistas() {
         return Arrays.asList(
             "vw_resumen_sistema",

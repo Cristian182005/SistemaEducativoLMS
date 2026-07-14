@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * Controlador REST para la gestion de usuarios del sistema.
+ */
 @RestController
 @RequestMapping("/api/usuarios")
 @CrossOrigin(origins = "*")
@@ -16,15 +19,13 @@ public class UsuarioController {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    // LISTAR
-
+    /** Lista todos los usuarios registrados en el sistema. @return lista de usuarios */
     @GetMapping
     public List<Usuario> listar() {
         return usuarioRepository.findAll();
     }
 
-    // GUARDAR
-
+    /** Guarda un nuevo usuario en el sistema. @param usuario datos del usuario a guardar @return usuario creado */
     @PostMapping
     public Usuario guardar(
             @RequestBody Usuario usuario) {
@@ -33,8 +34,7 @@ public class UsuarioController {
         
     }
 
-    // OBTENER POR ID
-
+    /** Obtiene un usuario por su identificador. @param id identificador del usuario @return usuario encontrado o null */
     @GetMapping("/{id}")
     public Usuario obtener(
             @PathVariable Integer id) {
@@ -44,8 +44,7 @@ public class UsuarioController {
                 .orElse(null);
     }
 
-    // ACTUALIZAR
-
+    /** Actualiza los datos de un usuario existente. @param id identificador del usuario @param datos nuevos datos del usuario @return usuario actualizado o null si no se encuentra */
     @PutMapping("/{id}")
     public Usuario actualizar(
             @PathVariable Integer id,
@@ -69,8 +68,7 @@ public class UsuarioController {
         return usuarioRepository.save(usuario);
     }
 
-    // ELIMINAR
-
+    /** Elimina un usuario por su identificador. @param id identificador del usuario */
     @DeleteMapping("/{id}")
     public void eliminar(
             @PathVariable Integer id) {

@@ -14,6 +14,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Controlador REST para el dashboard administrativo, que provee resumen de datos y estadisticas.
+ */
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/api/dashboard")
@@ -31,6 +34,11 @@ public class DashboardController {
         @Autowired
         private MatriculaRepository matriculaRepository;
 
+        /**
+         * Obtiene la cantidad de matriculas agrupadas por fecha.
+         *
+         * @return lista de mapas con las claves "fecha" y "cantidad"
+         */
         @GetMapping("/matriculas-fecha")
         public List<Map<String, Object>> obtenerMatriculasPorFecha() {
 
@@ -58,6 +66,11 @@ public class DashboardController {
         @Autowired
         private UsuarioRepository usuarioRepository;
 
+        /**
+         * Obtiene un resumen con el total de registros de cada entidad del sistema.
+         *
+         * @return mapa de clave-valor con la entidad y su cantidad total
+         */
         @GetMapping("/resumen")
         public Map<String, Long> obtenerResumen() {
 

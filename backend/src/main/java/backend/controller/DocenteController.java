@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * Controlador REST para la gestion de docentes del sistema educativo.
+ */
 @RestController
 @RequestMapping("/api/docentes")
 @CrossOrigin(origins = "http://localhost:5173")
@@ -16,25 +19,25 @@ public class DocenteController {
     @Autowired
     private DocenteRepository docenteRepository;
 
-    // LISTAR
+    /** Lista todos los docentes registrados en el sistema. @return lista de docentes */
     @GetMapping
     public List<Docente> listarDocentes() {
         return docenteRepository.findAll();
     }
 
-    // GUARDAR
+    /** Guarda un nuevo docente en el sistema. @param docente datos del docente a guardar @return docente creado */
     @PostMapping
     public Docente guardarDocente(@RequestBody Docente docente) {
         return docenteRepository.save(docente);
     }
 
-    // BUSCAR POR ID
+    /** Obtiene un docente por su identificador. @param id identificador del docente @return docente encontrado o null */
     @GetMapping("/{id}")
     public Docente obtenerDocente(@PathVariable Long id) {
         return docenteRepository.findById(id).orElse(null);
     }
 
-    // ACTUALIZAR
+    /** Actualiza los datos de un docente existente. @param id identificador del docente @param datos nuevos datos del docente @return docente actualizado o null si no se encuentra */
     @PutMapping("/{id}")
     public Docente actualizarDocente(
             @PathVariable Long id,
@@ -57,7 +60,7 @@ public class DocenteController {
         return null;
     }
 
-    // ELIMINAR
+    /** Elimina un docente por su identificador. @param id identificador del docente @return mensaje de confirmacion */
     @DeleteMapping("/{id}")
     public String eliminarDocente(@PathVariable Long id) {
 

@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * Controlador REST para la gestion de calificaciones de estudiantes.
+ */
 @RestController
 @RequestMapping("/api/calificaciones")
 @CrossOrigin(origins = "http://localhost:5173")
@@ -17,32 +20,32 @@ public class CalificacionController {
     @Autowired
     private CalificacionRepository calificacionRepository;  
 
-    // LISTAR POR ESTUDIANTE (con info de tarea y curso)
+    /** Lista las calificaciones de un estudiante con informacion de tarea y curso. @param idEstudiante identificador del estudiante @return lista de calificaciones del estudiante */
     @GetMapping("/por-estudiante/{idEstudiante}")
     public List<CalificacionEstudianteDTO> listarCalificacionesPorEstudiante(
             @PathVariable Integer idEstudiante) {
         return calificacionRepository.findCalificacionesEstudiante(idEstudiante);
     }
 
-    // LISTAR
+    /** Lista todas las calificaciones registradas en el sistema. @return lista de calificaciones */
     @GetMapping
     public List<Calificacion> listarCalificaciones() {
         return calificacionRepository.findAll();
     }
 
-    // GUARDAR
+    /** Guarda una nueva calificacion en el sistema. @param calificacion datos de la calificacion a guardar @return calificacion creada */
     @PostMapping
     public Calificacion guardarCalificacion(@RequestBody Calificacion calificacion) {
         return calificacionRepository.save(calificacion);
     }
 
-    // BUSCAR POR ID
+    /** Obtiene una calificacion por su identificador. @param id identificador de la calificacion @return calificacion encontrada o null */
     @GetMapping("/{id}")
     public Calificacion obtenerCalificacion(@PathVariable Long id) {
         return calificacionRepository.findById(id).orElse(null);
     }
 
-    // ACTUALIZAR
+    /** Actualiza los datos de una calificacion existente. @param id identificador de la calificacion @param datos nuevos datos de la calificacion @return calificacion actualizada o null si no se encuentra */
     @PutMapping("/{id}")
     public Calificacion actualizarCalificacion(@PathVariable Long id,
                                                @RequestBody Calificacion datos) {
@@ -60,7 +63,7 @@ public class CalificacionController {
         return null;
     }
 
-    // ELIMINAR
+    /** Elimina una calificacion por su identificador. @param id identificador de la calificacion @return mensaje de confirmacion */
     @DeleteMapping("/{id}")
     public String eliminarCalificacion(@PathVariable Long id) {
 
