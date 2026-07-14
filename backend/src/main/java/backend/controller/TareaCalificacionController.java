@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Controlador REST para el registro de tareas con calificaciones asociadas.
+ */
 @RestController
 @RequestMapping("/api/tarea-calificacion")
 @CrossOrigin(origins = "*")
@@ -18,6 +21,12 @@ public class TareaCalificacionController {
     @Autowired
     private TareaCalificacionService service;
 
+    /**
+     * Registra una nueva tarea con las calificaciones de los estudiantes asociados.
+     *
+     * @param dto objeto de transferencia de datos con la informacion de la tarea y las calificaciones
+     * @return ResponseEntity con el resultado del registro, incluyendo el ID de la tarea y el total de calificaciones
+     */
     @PostMapping
     public ResponseEntity<?> registrarTarea(@RequestBody TareaCalificacionDTO dto) {
         try {

@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
+/**
+ * Controlador REST para integracion con Metabase, que provee vistas de datos y generacion de reportes PDF.
+ */
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/api/metabase")
@@ -23,6 +26,11 @@ public class MetabaseController {
     // =========================
     // LISTAR VISTAS DISPONIBLES
     // =========================
+    /**
+     * Lista las vistas disponibles en Metabase con su identificador y nombre descriptivo.
+     *
+     * @return lista de mapas con las claves "id" y "nombre" de cada vista
+     */
     @GetMapping("/vistas")
     public List<Map<String, String>> listarVistas() {
         List<Map<String, String>> vistas = new ArrayList<>();
@@ -52,6 +60,12 @@ public class MetabaseController {
     // =========================
     // OBTENER DATOS DE UNA VISTA
     // =========================
+    /**
+     * Obtiene los datos de una vista especifica de Metabase.
+     *
+     * @param nombreVista identificador de la vista a consultar
+     * @return ResponseEntity con las columnas, filas y total de registros de la vista
+     */
     @GetMapping("/datos/{nombreVista}")
     public ResponseEntity<Map<String, Object>> obtenerDatos(@PathVariable String nombreVista) {
         Map<String, Object> datos = metabaseService.obtenerDatosVista(nombreVista);
@@ -67,6 +81,13 @@ public class MetabaseController {
     // =========================
     // GENERAR PDF DESDE VISTA
     // =========================
+    /**
+     * Genera un archivo PDF a partir de los datos de una vista de Metabase.
+     *
+     * @param nombreVista identificador de la vista a convertir a PDF
+     * @param titulo titulo del reporte (opcional, por defecto "Reporte")
+     * @return ResponseEntity con el bytes del PDF o error 404 si no se encuentra la vista
+     */
     @GetMapping("/pdf/{nombreVista}")
     public ResponseEntity<byte[]> generarPdfDesdeVista(
             @PathVariable String nombreVista,
@@ -88,6 +109,11 @@ public class MetabaseController {
     // =========================
     // VERIFICAR CONEXION CON METABASE
     // =========================
+    /**
+     * Verifica la conexion con el servidor de Metabase intentando autenticar.
+     *
+     * @return ResponseEntity con el estado de la conexion y la URL del servidor
+     */
     @GetMapping("/status")
     public ResponseEntity<Map<String, Object>> verificarConexion() {
         Map<String, Object> status = new HashMap<>();

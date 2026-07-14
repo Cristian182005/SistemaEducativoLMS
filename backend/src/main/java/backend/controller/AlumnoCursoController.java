@@ -10,6 +10,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Controlador REST para listar los alumnos asignados a un curso especifico.
+ */
 @RestController
 @RequestMapping("/api/alumnos-curso")
 @CrossOrigin(origins = "*")
@@ -18,6 +21,13 @@ public class AlumnoCursoController {
     @Autowired
     private AlumnoCursoService service;
 
+    /**
+     * Lista los alumnos asignados a un curso y docente especificos.
+     *
+     * @param idCurso identificador del curso
+     * @param idDocente identificador del docente
+     * @return respuesta con la lista de alumnos, total y estado de exito
+     */
     @GetMapping
     public ResponseEntity<?> listarAlumnos(
             @RequestParam String idCurso,

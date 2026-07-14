@@ -17,6 +17,9 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/estudiantes")
 @CrossOrigin("*")
+/**
+ * Controlador REST para la gestion de estudiantes del sistema educativo, con paginacion y busqueda.
+ */
 public class EstudianteController {
 
     @Autowired
@@ -25,6 +28,13 @@ public class EstudianteController {
     @Autowired
     private PadreEstudianteRepository padreEstudianteRepository;
 
+    /**
+     * Lista todos los estudiantes con paginacion, ordenados por ID descendente.
+     *
+     * @param page numero de pagina (por defecto 0)
+     * @param size cantidad de elementos por pagina (por defecto 10)
+     * @return pagina de estudiantes
+     */
     @GetMapping
     public Page<Estudiante> listarEstudiantes(
             @RequestParam(defaultValue = "0") int page,
@@ -33,6 +43,14 @@ public class EstudianteController {
         return estudianteRepository.findAll(pageable);
     }
 
+    /**
+     * Busca estudiantes por texto con paginacion.
+     *
+     * @param buscar texto de busqueda
+     * @param page numero de pagina (por defecto 0)
+     * @param size cantidad de elementos por pagina (por defecto 10)
+     * @return pagina de estudiantes encontrados
+     */
     @GetMapping("/buscar")
     public Page<Estudiante> buscarEstudiantes(
             @RequestParam String buscar,
@@ -42,6 +60,12 @@ public class EstudianteController {
         return estudianteRepository.buscarEstudiantes(buscar, pageable);
     }
 
+    /**
+     * Obtiene un estudiante a partir del ID del usuario asociado.
+     *
+     * @param idUsuario identificador del usuario
+     * @return estudiante encontrado o 404 si no existe
+     */
     @GetMapping("/por-usuario/{idUsuario}")
     public ResponseEntity<Estudiante> obtenerEstudiantePorUsuario(@PathVariable Integer idUsuario) {
         Estudiante estudiante = estudianteRepository.findByidUsuario(idUsuario);
@@ -51,6 +75,12 @@ public class EstudianteController {
         return ResponseEntity.ok(estudiante);
     }
 
+    /**
+     * Obtiene un estudiante por su ID.
+     *
+     * @param id identificador del estudiante
+     * @return estudiante encontrado o 404 si no existe
+     */
     @GetMapping("/{id}")
     public ResponseEntity<Estudiante> obtenerEstudiante(@PathVariable Integer id) {
         Estudiante estudiante = estudianteRepository.findById(id).orElse(null);
@@ -60,16 +90,35 @@ public class EstudianteController {
         return ResponseEntity.ok(estudiante);
     }
 
+    /**
+     * Obtiene los padres asociados a un estudiante.
+     *
+     * @param id identificador del estudiante
+     * @return lista de relaciones padre-estudiante
+     */
     @GetMapping("/{id}/padres")
     public ResponseEntity<?> obtenerPadres(@PathVariable Integer id) {
         return ResponseEntity.ok(padreEstudianteRepository.findByEstudiante_IdEstudiante(id));
     }
 
+    /**
+     * Guarda un nuevo estudiante en el sistema.
+     *
+     * @param estudiante datos del estudiante a registrar
+     * @return estudiante creado
+     */
     @PostMapping
     public Estudiante guardarEstudiante(@RequestBody Estudiante estudiante) {
         return estudianteRepository.save(estudiante);
     }
 
+    /**
+     * Actualiza los datos de un estudiante existente.
+     *
+     * @param id identificador del estudiante a actualizar
+     * @param estudianteActualizado datos actualizados del estudiante
+     * @return estudiante actualizado o 404 si no existe
+     */
     @PutMapping("/{id}")
     public ResponseEntity<Estudiante> actualizarEstudiante(@PathVariable Integer id,
                                                            @RequestBody Estudiante estudianteActualizado) {
@@ -95,6 +144,12 @@ public class EstudianteController {
         return ResponseEntity.ok(estudianteRepository.save(estudiante));
     }
 
+    /**
+     * Elimina un estudiante por su ID.
+     *
+     * @param id identificador del estudiante a eliminar
+     * @return confirmacion de eliminacion o 404 si no existe
+     */
     @DeleteMapping("/{id}")
     public ResponseEntity<?> eliminarEstudiante(@PathVariable Integer id) {
         if (!estudianteRepository.existsById(id)) {

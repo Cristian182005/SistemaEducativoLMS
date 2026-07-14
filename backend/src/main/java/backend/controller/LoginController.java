@@ -13,6 +13,9 @@ import java.util.Optional;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Controlador REST para autenticacion de usuarios y registro de padres.
+ */
 @RestController
 @RequestMapping("/api")
 @CrossOrigin(origins = "*")
@@ -27,6 +30,11 @@ public class LoginController {
     // MENSAJE SI ENTRAN DESDE EL NAVEGADOR
     // =========================================
 
+    /**
+     * Devuelve un mensaje de confirmacion de que la API de login esta funcionando.
+     *
+     * @return mensaje de texto con el estado de la API
+     */
     @GetMapping("/login")
     public String mensajeLogin() {
 
@@ -37,6 +45,12 @@ public class LoginController {
     // LOGIN REAL
     // =========================================
 
+    /**
+     * Realiza la autenticacion de un usuario con correo y password.
+     *
+     * @param datos objeto con el correo y password del usuario
+     * @return mapa con el resultado de la operacion, incluyendo el objeto usuario en caso de exito
+     */
     @PostMapping("/login")
     public Map<String, Object> login(@RequestBody Usuario datos) {
 
@@ -72,6 +86,12 @@ public class LoginController {
         return respuesta;
     }
 
+    /**
+     * Registra un nuevo padre o apoderado en el sistema, creando tanto el usuario como el registro de padre.
+     *
+     * @param datos mapa con los datos del padre: nombres, apellidos, dni, telefono, direccion, tipo, correo y password
+     * @return mapa con el resultado de la operacion y el usuario creado en caso de exito
+     */
     @PostMapping("/register-padre")
     public Map<String, Object> registerPadre(
             @RequestBody Map<String, String> datos) {

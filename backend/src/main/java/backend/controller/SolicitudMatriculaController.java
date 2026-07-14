@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * Controlador REST para la gestion de solicitudes de matricula, incluyendo aprobacion y rechazo.
+ */
 @RestController
 @RequestMapping("/api/solicitudes")
 @CrossOrigin("*")
@@ -27,40 +30,46 @@ public class SolicitudMatriculaController {
     @Autowired
     private EstudianteRepository estudianteRepository;
 
-    // =========================================
-    // LISTAR SOLICITUDES
-    // =========================================
-
+    /**
+     * Lista todas las solicitudes de matricula registradas.
+     *
+     * @return lista de solicitudes
+     */
     @GetMapping
     public List<SolicitudMatricula> listar() {
 
         return repository.findAll();
     }
 
-    // =========================================
-    // LISTAR PADRES (COMBOBOX)
-    // =========================================
-
+    /**
+     * Lista todos los padres disponibles para el selector de solicitudes.
+     *
+     * @return lista de padres
+     */
     @GetMapping("/padres")
     public List<Padre> listarPadres() {
 
         return padreRepository.findAll();
     }
 
-    // =========================================
-    // LISTAR ESTUDIANTES (COMBOBOX)
-    // =========================================
-
+    /**
+     * Lista todos los estudiantes disponibles para el selector de solicitudes.
+     *
+     * @return lista de estudiantes
+     */
     @GetMapping("/estudiantes")
     public List<Estudiante> listarEstudiantes() {
 
         return estudianteRepository.findAll();
     }
 
-    // =========================================
-    // REGISTRAR SOLICITUD DESDE PADRE LOGUEADO
-    // =========================================
-
+    /**
+     * Registra una nueva solicitud de matricula desde un padre logueado, con estado PENDIENTE.
+     *
+     * @param idUsuario identificador del usuario padre
+     * @param idEstudiante identificador del estudiante
+     * @return solicitud creada o null si el padre o estudiante no existen
+     */
     @PostMapping("/registrar")
     public SolicitudMatricula registrarSolicitud(
             @RequestParam Integer idUsuario,
@@ -95,10 +104,12 @@ public class SolicitudMatriculaController {
         return repository.save(solicitud);
     }
 
-    // =========================================
-    // APROBAR
-    // =========================================
-
+    /**
+     * Aprueba una solicitud de matricula, cambiando su estado a APROBADA.
+     *
+     * @param id identificador de la solicitud a aprobar
+     * @return solicitud actualizada o null si no existe
+     */
     @PutMapping("/{id}/aprobar")
     public SolicitudMatricula aprobar(
             @PathVariable Integer id) {
@@ -113,10 +124,12 @@ public class SolicitudMatriculaController {
         return repository.save(solicitud);
     }
 
-    // =========================================
-    // RECHAZAR
-    // =========================================
-
+    /**
+     * Rechaza una solicitud de matricula, cambiando su estado a RECHAZADA.
+     *
+     * @param id identificador de la solicitud a rechazar
+     * @return solicitud actualizada o null si no existe
+     */
     @PutMapping("/{id}/rechazar")
     public SolicitudMatricula rechazar(
             @PathVariable Integer id) {
@@ -131,10 +144,11 @@ public class SolicitudMatriculaController {
         return repository.save(solicitud);
     }
 
-    // =========================================
-    // ELIMINAR
-    // =========================================
-
+    /**
+     * Elimina una solicitud de matricula por su ID.
+     *
+     * @param id identificador de la solicitud a eliminar
+     */
     @DeleteMapping("/{id}")
     public void eliminar(
             @PathVariable Integer id) {

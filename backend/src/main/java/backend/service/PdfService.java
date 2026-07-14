@@ -16,6 +16,10 @@ import java.time.LocalDate;
 import java.util.*;
 import java.util.List;
 
+/**
+ * Servicio de generacion de documentos PDF del sistema educativo, incluyendo fichas de matricula,
+ * boletas de calificaciones, reportes y constancias.
+ */
 @Service
 public class PdfService {
 

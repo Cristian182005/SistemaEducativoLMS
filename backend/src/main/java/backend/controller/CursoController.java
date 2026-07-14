@@ -8,6 +8,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * Controlador REST para la gestion de cursos del sistema educativo.
+ * Proporciona operaciones CRUD basicas.
+ */
 @RestController
 @RequestMapping("/api/cursos")
 @CrossOrigin(origins = "http://localhost:5173")
@@ -16,29 +20,25 @@ public class CursoController {
     @Autowired
     private CursoRepository cursoRepository;
 
-    // LISTAR
-
+    /** Lista todos los cursos registrados en el sistema. @return lista de cursos */
     @GetMapping
     public List<Curso> listarCursos() {
         return cursoRepository.findAll();
     }
 
-    // GUARDAR
-
+    /** Guarda un nuevo curso en el sistema. @param curso datos del curso a guardar @return curso creado */
     @PostMapping
     public Curso guardarCurso(@RequestBody Curso curso) {
         return cursoRepository.save(curso);
     }
 
-    // BUSCAR POR ID
-
+    /** Obtiene un curso por su identificador. @param id identificador del curso @return curso encontrado o null */
     @GetMapping("/{id}")
     public Curso obtenerCurso(@PathVariable Integer id) {
         return cursoRepository.findById(id).orElse(null);
     }
 
-    // ACTUALIZAR
-
+    /** Actualiza los datos de un curso existente. @param id identificador del curso @param datos nuevos datos del curso @return curso actualizado o null si no se encuentra */
     @PutMapping("/{id}")
     public Curso actualizarCurso(
             @PathVariable Integer id,
@@ -60,8 +60,7 @@ public class CursoController {
         return null;
     }
 
-    // ELIMINAR
-
+    /** Elimina un curso por su identificador. @param id identificador del curso @return mensaje de confirmacion */
     @DeleteMapping("/{id}")
     public String eliminarCurso(@PathVariable Integer id) {
 
